@@ -224,7 +224,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		gui.IgnoreGuiInset = true
 		gui.ResetOnSpawn = false
 
-    gui.Zindex = -999999
+    gui.ZIndex = -999999
 
 		local img = Instance.new("ImageLabel", gui)
 		img.Image = "rbxassetid://16020415559"
