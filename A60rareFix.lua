@@ -224,7 +224,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		gui.IgnoreGuiInset = true
 		gui.ResetOnSpawn = false
 
-    gui.ZIndex = -999999
+        gui.DisplayOrder = -999999
 
 		local img = Instance.new("ImageLabel", gui)
 		img.Image = "rbxassetid://16020415559"
@@ -246,7 +246,6 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		tween.Completed:Wait()
 
 		-- Sau tween, bạn có thể thêm hiệu ứng khác nếu muốn
-		entityModel:Destroy()
 		game.Players.LocalPlayer.Character.Humanoid.Health -= 1000
 		game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Multi Monster"
 		wait(2)
