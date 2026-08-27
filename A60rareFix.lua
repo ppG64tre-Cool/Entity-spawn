@@ -194,16 +194,16 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		camConn = RunService.RenderStepped:Connect(function()
 			-- Nếu người chơi trốn, hủy jumpscare
 			if character:GetAttribute("Hiding") then
-				if camConn then camConn:Disconnect() end
-				camera.CameraType = Enum.CameraType.Custom
+				--if camConn then camConn:Disconnect() end
+				--camera.CameraType = Enum.CameraType.Custom
 
-				for _, s in ipairs(allSounds) do
-					if s and s.Parent then s:Play() end
-				end
+				--for _, s in ipairs(allSounds) do
+					--if s and s.Parent then s:Play() end
+				--end
 
-				primaryPart.Anchored = false
-				return
-			end
+				--primaryPart.Anchored = false
+				--return
+			--end
 
 			-- Bám theo camera
 			local desiredPos = camera.CFrame.Position + camera.CFrame.LookVector * 4
@@ -246,7 +246,10 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		tween.Completed:Wait()
 
 		-- Sau tween, bạn có thể thêm hiệu ứng khác nếu muốn
-		entityModel:Destroy()
+		if camConn then camConn:Disconnect() end
+		for _, s in ipairs(allSounds) do
+			if s and s.Parent then s:Play() end
+		end
 		game.Players.LocalPlayer.Character.Humanoid.Health -= 1000
 		game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Multi Monster"
 		wait(2)
