@@ -61,7 +61,7 @@ local entity = spawner.Create({
 
 -- ================== ON SPAWN ==================
 entity:SetCallback("OnSpawned", function()
-	require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("A-60 : Prepare Yourseft", true)
+	require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Prepare Yourseft", true)
 	wait(2)
 	local lighting = game.Lighting
 	lighting.MainColorCorrection.TintColor = Color3.fromRGB(255, 0, 0)
@@ -89,8 +89,8 @@ entity:SetCallback("OnSpawned", function()
 
 	local part = workspace:WaitForChild("A60")
 	local object = part:WaitForChild("RushNew")
-	local attachment = object:WaitForChild("ImageFace")
-	local emitter = attachment:FindFirstChildWhichIsA("ParticleEmitter")
+	local attachment = object:WaitForChild("Main")
+	local emitter = attachment:FindFirstChildWhichIsA("Face")
 
 	object.CanCollide = false
 
