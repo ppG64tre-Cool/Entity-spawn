@@ -90,7 +90,7 @@ entity:SetCallback("OnSpawned", function()
 	local part = workspace:WaitForChild("A60")
 	local object = part:WaitForChild("RushNew")
 	local attachment = object:WaitForChild("Main")
-	local emitter = attachment:FindFirstChildWhichIsA("Face")
+	local emitter = attachment:FindFirstChild("Face")
 
 	object.CanCollide = false
 
