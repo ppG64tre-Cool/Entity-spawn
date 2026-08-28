@@ -216,10 +216,8 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		-- 😱 HIỆU ỨNG JUMPSCARE SAU 1 GIÂY (DISPLAY HÌNH ẢNH + TWEEN)
 		--------------------------------------------------------------------
 		task.wait(0.88)
-        if character:GetAttribute("Hiding") then
-			return
-		end
-		-- GUI cho jumpscare
+        if not character:GetAttribute("Hiding") then
+			-- GUI cho jumpscare
 		local gui = Instance.new("ScreenGui", player.PlayerGui)
 		gui.IgnoreGuiInset = true
 		gui.ResetOnSpawn = false
@@ -254,6 +252,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Multi Monster"
 		wait(2)
 		gui:Destroy()
+		end
 	end)
 end)
 
