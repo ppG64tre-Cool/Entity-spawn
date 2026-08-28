@@ -1,5 +1,4 @@
-pcall(function()
-	local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Entity%20Spawner/V2/Source.lua"))()
+local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Entity%20Spawner/V2/Source.lua"))()
 local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
 local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
@@ -13,7 +12,7 @@ local lighting = game.Lighting
 local entity = spawner.Create({
 	Entity = {
 		Name = "A60",
-		Asset = "https://github.com/ppG64tre-Cool/Entity-spawn/blob/main/ARE%20YOU%20SERI3.rbxm?raw=true",
+		Asset = "https://github.com/ppG64tre-Cool/Entity-spawn/blob/main/ARE%20YOU%20SERI3.rbxmx?raw=true",
 		HeightOffset = 1
 	},
 	Lights = {
@@ -345,7 +344,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		tween.Completed:Wait()
 
 		-- Sau tween, bạn có thể thêm hiệu ứng khác nếu muốn
-		if camConn then camConn:Disconnect() end
+		if camConn and camConn ~= nil then camConn:Disconnect() end
 		for _, s in ipairs(allSounds) do
 			if s and s.Parent then s:Play() end
 		end
@@ -357,5 +356,4 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 end)
 
 -- ================== CHẠY ENTITY ==================
-entity:Run()	
-end)
+entity:Run()
