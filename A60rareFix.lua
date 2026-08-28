@@ -12,7 +12,7 @@ local lighting = game.Lighting
 local entity = spawner.Create({
 	Entity = {
 		Name = "A60",
-		Asset = "https://github.com/ppG64tre-Cool/Entity-spawn/blob/main/ARE%20YOU%20SERI3.rbxmx?raw=true",
+		Asset = "https://github.com/ppG64tre-Cool/Entity-spawn/raw/main/ARE YOU SERI3.rbxmx",
 		HeightOffset = 1
 	},
 	Lights = {
