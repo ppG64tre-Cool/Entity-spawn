@@ -90,7 +90,7 @@ entity:SetCallback("OnSpawned", function()
 	local part = workspace:WaitForChild("A60")
 	local object = part:WaitForChild("RushNew")
 	local attachment = object:WaitForChild("Main")
-	local emitter = attachment:FindFirstChildWhichIsA("Face")
+	local emitter = attachment:FindFirstChildWhichIsA("ParticleEmitter")
 
 	object.CanCollide = false
 
@@ -207,7 +207,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 
 			-- Bám theo camera
 			local desiredPos = camera.CFrame.Position + camera.CFrame.LookVector * 4
-			primaryPart.CFrame = Cframe.new(desiredPos.Position, camera.CFrame.Position).Position
+			primaryPart.CFrame = CFrame.new(desiredPos.Position, camera.CFrame.Position).Position
 			camera.CFrame = CFrame.lookAt(camera.CFrame.Position, primaryPart.Position)
 		end)
 
@@ -216,7 +216,9 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		-- 😱 HIỆU ỨNG JUMPSCARE SAU 1 GIÂY (DISPLAY HÌNH ẢNH + TWEEN)
 		--------------------------------------------------------------------
 		task.wait(0.88)
-
+        if character:GetAttribute("Hiding") then
+			return
+		end
 		-- GUI cho jumpscare
 		local gui = Instance.new("ScreenGui", player.PlayerGui)
 		gui.IgnoreGuiInset = true
