@@ -156,6 +156,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		return
 	end
 	task.spawn(function()
+		local injumpscare = true
 		local character = player.Character or player.CharacterAdded:Wait()
 		local humanoid = character:WaitForChild("Humanoid")
 		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
@@ -212,6 +213,8 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 					if s and s.Parent then s:Play() end
 				end
 
+				injumpscare = false
+
 			    return
 			end
 
@@ -226,7 +229,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		-- 😱 HIỆU ỨNG JUMPSCARE SAU 1 GIÂY (DISPLAY HÌNH ẢNH + TWEEN)
 		--------------------------------------------------------------------
 		task.wait(0.88)
-        if not character:GetAttribute("Hiding") then
+        if not character:GetAttribute("Hiding") and injumpacare then
 			-- GUI cho jumpscare
 		local gui = Instance.new("ScreenGui", player.PlayerGui)
 		gui.IgnoreGuiInset = true
