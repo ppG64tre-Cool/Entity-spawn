@@ -9,6 +9,17 @@ local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
 local camera = Workspace.CurrentCamera
 
+local faces = {
+				"rbxassetid://12145534911",
+				"rbxassetid://12145554242",
+				"rbxassetid://12145599498",
+				"rbxassetid://12145599275",
+				"rbxassetid://12155335619",
+				"rbxassetid://12145598814",
+				"rbxassetid://12146135062",
+				"rbxassetid://11378285585"
+}
+
 -- Khởi tạo entity
 local entity = spawner.Create({
 	Entity = {
@@ -223,7 +234,8 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		gui.ResetOnSpawn = false
 
 		local img = Instance.new("ImageLabel", gui)
-		img.Image = "rbxassetid://16020415559"
+		local rng = Random.new()
+        img.Image = faces[rng:NextInteger(1,#faces)]
 		img.BackgroundTransparency = 1
 		img.Size = UDim2.fromScale(0.8, 0.8)          -- nhỏ lúc đầu
 		img.Position = UDim2.fromScale(0.1, 0.1)
