@@ -9,6 +9,8 @@ local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
 local camera = Workspace.CurrentCamera
 
+local ambiencesounds 
+
 local faces = {
 				"rbxassetid://12145534911",
 				"rbxassetid://12145554242",
@@ -72,8 +74,6 @@ local entity = spawner.Create({
 
 -- ================== ON SPAWN ==================
 entity:SetCallback("OnSpawned", function()
-	require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("A-60 : Prepare Yourseft", true)
-	wait(2)
 	local lighting = game.Lighting
 	lighting.MainColorCorrection.TintColor = Color3.fromRGB(255, 0, 0)
 	lighting.MainColorCorrection.Contrast = 0.2
@@ -102,6 +102,13 @@ entity:SetCallback("OnSpawned", function()
 	local object = part:WaitForChild("RushNew")
 	local attachment = object:WaitForChild("Main")
 	local emitter = attachment:FindFirstChildWhichIsA("ParticleEmitter")
+	local ambiencesound = part:FindFirstChildWhichIsA("SoundGroup")
+
+	for _,sounds in pairs(part:GetDescendants()) do
+		if sounds:IsA("Sound") and sounds:IsDescendantOf(ambiencesound) then
+			sounds.Volume = 0
+	    end
+	end
 
 	object.CanCollide = false
 
