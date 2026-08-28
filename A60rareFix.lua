@@ -239,6 +239,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		img.Size = UDim2.fromScale(0.8, 0.8)          -- nhỏ lúc đầu
 		img.Position = UDim2.fromScale(0.1, 0.1)
 		img.Rotation = 0
+	    img.ScaleType = Enum.ScaleType.Fit
 		img.ImageTransparency = 1                     -- bắt đầu ẩn
 
 		-- Tween hiển thị + xoay + phóng to
