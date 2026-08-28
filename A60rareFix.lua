@@ -13,7 +13,7 @@ local camera = Workspace.CurrentCamera
 local entity = spawner.Create({
 	Entity = {
 		Name = "A60",
-		Asset = "https://github.com/eoyoustme/Extremely/blob/main/A60.rbxm?raw=true",
+		Asset = "https://github.com/ppG64tre-Cool/Entity-spawn/blob/main/ARE YOU SERI3.rbxm?raw=true",
 		HeightOffset = 1
 	},
 	Lights = {
@@ -89,8 +89,8 @@ entity:SetCallback("OnSpawned", function()
 
 	local part = workspace:WaitForChild("A60")
 	local object = part:WaitForChild("RushNew")
-	local attachment = object:WaitForChild("ImageFace")
-	local emitter = attachment:FindFirstChildWhichIsA("ParticleEmitter")
+	local attachment = object:WaitForChild("Main")
+	local emitter = attachment:FindFirstChildWhichIsA("Face")
 
 	object.CanCollide = false
 
