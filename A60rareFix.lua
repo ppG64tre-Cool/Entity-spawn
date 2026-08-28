@@ -211,8 +211,6 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 				for _, s in ipairs(allSounds) do
 					if s and s.Parent then s:Play() end
 				end
-
-				primaryPart.Anchored = false
 			end
 
 			-- Bám theo camera
