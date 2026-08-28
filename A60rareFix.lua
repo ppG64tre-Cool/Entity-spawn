@@ -247,7 +247,8 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		local tween = TweenService:Create(img, tweenInfo, {
 			ImageTransparency = 0,                    -- hiện lên
 			Rotation = 20,                             -- xoay nhẹ sang phải
-			Size = UDim2.fromScale(1.25, 1.25)         -- phóng to chút
+			Size = UDim2.fromScale(1.25, 1.25),         -- phóng to chút
+			Position = UDim2.fromScale(-0.125, -0.125)
 		})
 
 		tween:Play()
