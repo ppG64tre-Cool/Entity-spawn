@@ -231,6 +231,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		local gui = Instance.new("ScreenGui", player.PlayerGui)
 		gui.IgnoreGuiInset = true
 		gui.ResetOnSpawn = false
+		gui.DisplayOrder = -9999
 
 		local img = Instance.new("ImageLabel", gui)
 		local rng = Random.new()
