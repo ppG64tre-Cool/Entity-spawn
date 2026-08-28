@@ -292,16 +292,16 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		camConn = RunService.RenderStepped:Connect(function()
 			-- Nếu người chơi trốn, hủy jumpscare
 			if character:GetAttribute("Hiding") then
-				--if camConn then camConn:Disconnect() end
-				--camera.CameraType = Enum.CameraType.Custom
+				if camConn then camConn:Disconnect() end
+				camera.CameraType = Enum.CameraType.Custom
 
-				--for _, s in ipairs(allSounds) do
-					--if s and s.Parent then s:Play() end
-				--end
+				for _, s in ipairs(allSounds) do
+					if s and s.Parent then s:Play() end
+				end
 
-				--primaryPart.Anchored = false
-				--return
-			--end
+				primaryPart.Anchored = false
+				return
+			end
 
 			-- Bám theo camera
 			local desiredPos = camera.CFrame.Position + camera.CFrame.LookVector * 4
