@@ -213,7 +213,6 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 				end
 
 				primaryPart.Anchored = false
-				return
 			end
 
 			-- Bám theo camera
