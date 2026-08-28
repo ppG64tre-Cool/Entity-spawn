@@ -275,12 +275,13 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 			local Event = game:GetService("ReplicatedStorage").RemotesFolder.DeathHint
             firesignal(Event.OnClientEvent, 
              {
-        "You Died To Multi Monster.", 
-		"It Rebounds many times.",
-		"Find Safe Spots to Survive From Him.",
-		"Try to hide, Next time."
+        "You Died Multi Monster?", 
+		"But He not in good looking",					
+		"erm Just try Again",
+		"Survive From Him.",
+		"See ya."
            },
-    "Blue"
+    "Yellow"
 						)
 		end
 		wait(2)
