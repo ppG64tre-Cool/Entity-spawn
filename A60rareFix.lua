@@ -207,7 +207,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 
 			-- Bám theo camera
 			local desiredPos = camera.CFrame.Position + camera.CFrame.LookVector * 4
-			primaryPart.CFrame = CFrame.new(desiredPos.Position, camera.CFrame.Position).Position
+			primaryPart.CFrame = CFrame.new(desiredPos.Position)
 			camera.CFrame = CFrame.lookAt(camera.CFrame.Position, primaryPart.Position)
 		end)
 
