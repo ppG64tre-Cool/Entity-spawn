@@ -74,10 +74,11 @@ local entity = spawner.Create({
 
 -- ================== ON SPAWN ==================
 entity:SetCallback("OnSpawned", function()
-	local lighting = game.Lighting
-	lighting.MainColorCorrection.TintColor = Color3.fromRGB(255, 0, 0)
-	lighting.MainColorCorrection.Contrast = 0.2
-	TweenService:Create(lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0}):Play()
+	pcall(function()
+        local lighting = game.Lighting
+		lighting.MainColorCorrection.TintColor = Color3.fromRGB(255, 0, 0)
+	    lighting.MainColorCorrection.Contrast = 0.2
+	    TweenService:Create(lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0}):Play()
 	TweenService:Create(lighting.MainColorCorrection, TweenInfo.new(20), {TintColor = Color3.fromRGB(255, 255, 255)}):Play()
 
 	-- Camera Shake
@@ -97,6 +98,8 @@ entity:SetCallback("OnSpawned", function()
 
 	camShake:Start()
 	camShake:Shake(CameraShaker.Presets.Earthquake)
+				
+	end)
 
 	local part = workspace:WaitForChild("A60")
 	local object = part:WaitForChild("RushNew")
