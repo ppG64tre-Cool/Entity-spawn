@@ -229,7 +229,8 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		-- 😱 HIỆU ỨNG JUMPSCARE SAU 1 GIÂY (DISPLAY HÌNH ẢNH + TWEEN)
 		--------------------------------------------------------------------
 		task.wait(0.88)
-        if not character:GetAttribute("Hiding") and injumpscare then
+        if not character:GetAttribute("Hiding") then
+		    if not injumpscare then return end
 			-- GUI cho jumpscare
 		local gui = Instance.new("ScreenGui", player.PlayerGui)
 		gui.IgnoreGuiInset = true
