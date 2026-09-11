@@ -187,7 +187,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 
 		-- Âm thanh jumpscare
 		local sound = Instance.new("Sound", workspace)
-		sound.SoundId = "rbxassetid://103879029437685"
+		sound.SoundId = "rbxassetid://132942725846535"
 		sound.Volume = 10
 		sound:Play()
 
@@ -225,6 +225,8 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 				end
 
 				injumpscare = false
+
+                sound:Stop()
 
 			    return
 			end
@@ -298,6 +300,8 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		end
 		wait(2)
 		gui:Destroy()
+        wait(5)
+        sound:Destroy()
 		end
 	end)
 end)
