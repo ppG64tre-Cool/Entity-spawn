@@ -229,7 +229,9 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 
 				injumpscare = false
 
-                sound:Stop()
+                if sound ~= nil then
+					sound:Stop()
+				end
 
 			    return
 			end
