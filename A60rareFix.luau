@@ -228,7 +228,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 
                 if sound then
                     sound:Stop()
-                    sound:Remove()
+                    sound:Destroy()
                 end
 
 			    return
@@ -306,7 +306,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
         delay(10, function(),
             if sound then
                     sound:Stop()
-                    sound:Remove()
+                    sound:Destroy()
             end
         end)
 		end
