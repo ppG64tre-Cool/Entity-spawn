@@ -287,7 +287,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
             firesignal(Event.OnClientEvent, 
              {
         "That One Is Multi Monster.";
-		"A60 But i never him before, how did you found it?";				
+		"A60 But i never seen him before, how did you encounter him?";				
 		"it not instanty kill.";
 		"just dont make it too late.";
 		"See You Next.";
