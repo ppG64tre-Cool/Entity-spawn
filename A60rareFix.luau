@@ -101,7 +101,7 @@ entity:SetCallback("OnSpawned", function()
 				
 	end)
 
-	local part = workspace:WaitForChild("A60")
+	local part = entity.Model
 	local object = part:WaitForChild("RushNew")
 	local attachment = object:WaitForChild("Main")
 	local emitter = attachment:FindFirstChildWhichIsA("ParticleEmitter")
