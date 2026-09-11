@@ -195,7 +195,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 
 		local targetPos = humanoidRootPart.Position + humanoidRootPart.CFrame.LookVector * 10
 		local moveTween = TweenService:Create(primaryPart, TweenInfo.new(0.2), {
-			CFrame = CFrame.new(targetPos, camera.CFrame.Position)
+			CFrame = CFrame.new(targetPos)
 		})
 		moveTween:Play()
 		moveTween.Completed:Wait()
