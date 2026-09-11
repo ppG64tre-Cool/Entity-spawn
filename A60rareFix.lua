@@ -152,7 +152,7 @@ entity:SetCallback("OnSpawned", function()
 		}
 
 		for _, tint in ipairs(tints) do
-			local t = TweenService:Create(lighting.MainColorCorrection, TweenInfo.new(tint.Time), {TintColor = tint.Color})
+			local t = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(tint.Time), {TintColor = tint.Color})
 			t:Play()
 			task.wait(tint.Time)
 		end
