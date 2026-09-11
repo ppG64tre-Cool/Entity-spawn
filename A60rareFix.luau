@@ -251,7 +251,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
         img.Image = faces[rng:NextInteger(1,#faces)]
 		img.BackgroundTransparency = 1
 		img.Size = UDim2.fromScale(0.75, 0.75)          -- nhỏ lúc đầu
-		img.Position = UDim2.fromScale(0.875, 0.875)
+		img.Position = UDim2.fromScale(0.125, 0.125)
 		img.Rotation = 0
 	    img.ScaleType = Enum.ScaleType.Fit
 		img.ImageTransparency = 1                     -- bắt đầu ẩn
