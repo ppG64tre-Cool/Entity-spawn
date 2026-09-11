@@ -263,7 +263,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 			ImageTransparency = 0,                    -- hiện lên
 			Rotation = Random.new():NextNumber(-25,25),                             -- xoay nhẹ sang phải
 			Size = UDim2.fromScale(2, 2),         -- phóng to chút
-			Position = UDim2.fromScale(-0.5, -0.5)
+			Position = UDim2.fromScale(-0.5 + Random.new():NextNumber(-0.025,0.025), -0.5 + Random.new():NextNumber(-0.025,0.025))
 		})
 
 		tween:Play()
