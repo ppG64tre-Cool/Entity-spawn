@@ -226,7 +226,10 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 
 				injumpscare = false
 
-                sound:Stop()
+                if sound then
+                    sound:Stop()
+                    sound:Remove()
+                end
 
 			    return
 			end
@@ -301,7 +304,12 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		wait(2)
 		gui:Destroy()
         wait(5)
-        sound:Destroy()
+        Delay(10, function(),
+            if sound then
+                    sound:Stop()
+                    sound:Remove()
+            end
+        end)
 		end
 	end)
 end)
