@@ -43,7 +43,7 @@ local entity = spawner.Create({
 	},
 	Movement = {
 		Speed = 300,
-		Delay = 0,
+		Delay = 7.5,
 		Reversed = false
 	},
 	Rebounding = {
