@@ -226,10 +226,10 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 
 				injumpscare = false
 
-                if sound ~= nil then
+                if sound ~= nil and sound:IsA("Sound") then
 					sound:Stop()
 				    sound:Destroy()
-				end
+				end		
 
 			    return
 			end
@@ -262,12 +262,12 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		img.Rotation = 0
         img.ImageColor3 = Color3.fromRGB(10, 10, 10)
 	    img.ScaleType = Enum.ScaleType.Fit
-		img.ImageTransparency = 0                     -- bắt đầu ẩn
+		img.ImageTransparency = 1                     -- bắt đầu ẩn
 
 		-- Tween hiển thị + xoay + phóng to
 		local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
 		local tween = TweenService:Create(img, tweenInfo, {
-			ImageTransparency = 0,                    -- hiện lên
+			ImageTransparency = 0.25,                    -- hiện lên
 			Rotation = Random.new():NextNumber(-25,25),                             -- xoay nhẹ sang phải
 			Size = UDim2.fromScale(2, 2),         -- phóng to chút
 			Position = UDim2.fromScale(-0.5 + Random.new():NextNumber(-0.085,0.085), -0.5 + Random.new():NextNumber(-0.085,0.085))
@@ -303,6 +303,12 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		end
 		wait(2)
 		gui:Destroy()
+	    task.delay(15, function()
+				if sound ~= nil and sound:IsA("Sound") then
+					sound:Stop()
+				    sound:Destroy()
+				end		
+		end)
 		end
 	end)
 end)
