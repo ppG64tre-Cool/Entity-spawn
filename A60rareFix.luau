@@ -255,8 +255,9 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		img.Size = UDim2.fromScale(0.35, 0.35)          -- nhỏ lúc đầu
 		img.Position = UDim2.fromScale(0.325, 0.325)
 		img.Rotation = 0
+        img.ImageColor3 = Color3.fromRGB(255, 0, 0)
 	    img.ScaleType = Enum.ScaleType.Fit
-		img.ImageTransparency = 1                     -- bắt đầu ẩn
+		img.ImageTransparency = 0                     -- bắt đầu ẩn
 
 		-- Tween hiển thị + xoay + phóng to
 		local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
