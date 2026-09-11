@@ -304,7 +304,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		wait(2)
 		gui:Destroy()
         wait(5)
-        Delay(10, function(),
+        delay(10, function(),
             if sound then
                     sound:Stop()
                     sound:Remove()
