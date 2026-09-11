@@ -284,7 +284,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 			local Event = game:GetService("ReplicatedStorage").RemotesFolder.DeathHint
             firesignal(Event.OnClientEvent, 
              {
-        "That One Is Multi Monster.",;
+        "That One Is Multi Monster.";
 		"A60 But i never him before, how did you found it?";				
 		"it not instanty kill.";
 		"just dont make it too late.";
