@@ -250,8 +250,8 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		local rng = Random.new()
         img.Image = faces[rng:NextInteger(1,#faces)]
 		img.BackgroundTransparency = 1
-		img.Size = UDim2.fromScale(0.75, 0.75)          -- nhỏ lúc đầu
-		img.Position = UDim2.fromScale(0.125, 0.125)
+		img.Size = UDim2.fromScale(0.35, 0.35)          -- nhỏ lúc đầu
+		img.Position = UDim2.fromScale(0.325, 0.325)
 		img.Rotation = 0
 	    img.ScaleType = Enum.ScaleType.Fit
 		img.ImageTransparency = 1                     -- bắt đầu ẩn
@@ -260,7 +260,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
 		local tween = TweenService:Create(img, tweenInfo, {
 			ImageTransparency = 0,                    -- hiện lên
-			Rotation = 20,                             -- xoay nhẹ sang phải
+			Rotation = Random.new():NextNumber(-25,25),                             -- xoay nhẹ sang phải
 			Size = UDim2.fromScale(2, 2),         -- phóng to chút
 			Position = UDim2.fromScale(-0.5, -0.5)
 		})
@@ -284,11 +284,11 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 			local Event = game:GetService("ReplicatedStorage").RemotesFolder.DeathHint
             firesignal(Event.OnClientEvent, 
              {
-        "You Died Multi Monster?", 
-		"But He not in good looking",					
-		"erm Just try Again",
-		"Survive From Him.",
-		"See ya."
+        "That One Is Multi Monster.",;
+		"A60 But i never him before, how did you found it?";				
+		"it not instanty kill.";
+		"just dont make it too late.";
+		"See You Next.";
            },
     "Yellow"
 						)
