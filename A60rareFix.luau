@@ -303,7 +303,6 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		end
 		wait(2)
 		gui:Destroy()
-        wait(5)
         delay(10, function(),
             if sound then
                     sound:Stop()
