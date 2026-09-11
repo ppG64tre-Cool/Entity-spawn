@@ -250,8 +250,8 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		local rng = Random.new()
         img.Image = faces[rng:NextInteger(1,#faces)]
 		img.BackgroundTransparency = 1
-		img.Size = UDim2.fromScale(1.25, 1.25)          -- nhỏ lúc đầu
-		img.Position = UDim2.fromScale(, 0.1)
+		img.Size = UDim2.fromScale(0.75, 0.75)          -- nhỏ lúc đầu
+		img.Position = UDim2.fromScale(0.875, 0.875)
 		img.Rotation = 0
 	    img.ScaleType = Enum.ScaleType.Fit
 		img.ImageTransparency = 1                     -- bắt đầu ẩn
@@ -261,8 +261,8 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		local tween = TweenService:Create(img, tweenInfo, {
 			ImageTransparency = 0,                    -- hiện lên
 			Rotation = 20,                             -- xoay nhẹ sang phải
-			Size = UDim2.fromScale(1.5, 1.5),         -- phóng to chút
-			Position = UDim2.fromScale(-0.25, -0.25)
+			Size = UDim2.fromScale(2, 2),         -- phóng to chút
+			Position = UDim2.fromScale(-0.5, -0.5)
 		})
 
 		tween:Play()
