@@ -109,7 +109,7 @@ entity:SetCallback("OnSpawned", function()
 	local ambiencesound = part:WaitForChild("AmbienceSounds")
 	for _,sounds in pairs(part:GetDescendants()) do
 		if sounds:IsA("Sound") and sounds:IsDescendantOf(ambiencesound) then
-            if not theme then return end
+            if not theme or theme ~= true then return end
 			sounds.Volume = 0
 	    end
 	end
