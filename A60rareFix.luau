@@ -31,7 +31,7 @@ local entity = spawner.Create({
 		HeightOffset = 1
 	},
 	Lights = {
-		Flicker = {Enabled = false, Duration = 1},
+		Flicker = {Enabled = true, Duration = 10},
 		Shatter = false,
 		Repair = false
 	},
@@ -42,8 +42,8 @@ local entity = spawner.Create({
 		Values = {20, 30, 0.1, 0.1}
 	},
 	Movement = {
-		Speed = 200,
-		Delay = 6,
+		Speed = 300,
+		Delay = 0,
 		Reversed = false
 	},
 	Rebounding = {
@@ -56,7 +56,7 @@ local entity = spawner.Create({
 	Damage = {
 		Enabled = true,
 		Range = 100,
-		Amount = 0.01
+		Amount = 0
 	},
 	Crucifixion = {
 		Enabled = true,
