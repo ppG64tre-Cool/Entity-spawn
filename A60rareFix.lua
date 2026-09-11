@@ -7,8 +7,6 @@ local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
 
-local Debris = game:GetService("Debris")
-
 local player = Players.LocalPlayer
 local camera = Workspace.CurrentCamera
 
@@ -231,6 +229,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 
                 if sound ~= nil then
 					sound:Stop()
+				    sound:Destroy()
 				end
 
 			    return
