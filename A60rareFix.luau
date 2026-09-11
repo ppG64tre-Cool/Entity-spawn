@@ -170,6 +170,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		local character = player.Character or player.CharacterAdded:Wait()
 		local humanoid = character:WaitForChild("Humanoid")
 		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        camera = Workspace.CurrentCamera
 
 		local entityModel = entity.Model
 		local primaryPart = entityModel and entityModel:FindFirstChild("RushNew")
