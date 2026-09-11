@@ -7,6 +7,8 @@ local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
 
+local Debris = game:GetService("Debris")
+
 local player = Players.LocalPlayer
 local camera = Workspace.CurrentCamera
 
@@ -190,6 +192,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		sound.SoundId = "rbxassetid://132942725846535"
 		sound.Volume = 10
 		sound:Play()
+	    Debris:AddItem(sound,20)
 
 		-- A-60 đến sát người chơi
 		primaryPart.Anchored = true
