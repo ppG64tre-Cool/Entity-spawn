@@ -170,7 +170,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		local humanoid = character:WaitForChild("Humanoid")
 		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
-		local entityModel = workspace:FindFirstChild("A60")
+		local entityModel = entity.Model
 		local primaryPart = entityModel and entityModel:FindFirstChild("RushNew")
 		if not primaryPart then return end
 
