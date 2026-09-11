@@ -31,7 +31,7 @@ local entity = spawner.Create({
 		HeightOffset = 1
 	},
 	Lights = {
-		Flicker = {Enabled = true, Duration = 10},
+		Flicker = {Enabled = false, Duration = 10},
 		Shatter = false,
 		Repair = false
 	},
