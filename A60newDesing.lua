@@ -10,8 +10,6 @@ local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
 local camera = Workspace.CurrentCamera
 
-local ambiencesounds 
-
 local faces = {
 				"rbxassetid://12145534911",
 				"rbxassetid://12145554242",
@@ -83,22 +81,18 @@ entity:SetCallback("OnSpawned", function()
 	TweenService:Create(lighting.MainColorCorrection, TweenInfo.new(20), {TintColor = Color3.fromRGB(255, 255, 255)}):Play()
 
 	-- Camera Shake
-	local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
 	local camara = game.Workspace.CurrentCamera
 	local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
 		camara.CFrame = camara.CFrame * shakeCf
 	end)
 	camShake:Start()
 	camShake:ShakeOnce(40,70,0,4,2,12)
-	local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
-	local camara = game.Workspace.CurrentCamera
-
-	local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(cf)
+	
+	local camShake2 = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(cf)
 		camara.CFrame = camara.CFrame * cf
 	end)
-
-	camShake:Start()
-	camShake:Shake(CameraShaker.Presets.Earthquake)
+	camShake2:Start()
+	camShake2:Shake(CameraShaker.Presets.Earthquake)
 				
 	end)
 
