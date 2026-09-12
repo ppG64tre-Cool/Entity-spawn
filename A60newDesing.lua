@@ -181,8 +181,9 @@ entity:SetCallback("OnSpawned", function()
 			end
 		end
 	end)
+end)
 
-	entity:SetCallback("OnDespawning", function()
+entity:SetCallback("OnDespawning", function()
 		running = false
 
 		local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
@@ -204,7 +205,6 @@ entity:SetCallback("OnSpawned", function()
 			task.wait(tint.Time)
 		end
 	end)
-end)
 
 -- ================== ON DAMAGE ==================
 entity:SetCallback("OnDamagePlayer", function(newHealth)
@@ -361,4 +361,4 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 end)
 
 -- ================== CHẠY ENTITY ==================
-entity:Run(true)
+entity:Run()
