@@ -1,6 +1,6 @@
 -- Import spawner
 
-local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Entity%20Spawner/V2/Source.lua"))()
+local Spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/DOORS-Entity-Spawner-V2/main/init.luau"))()
 local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
 local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
@@ -21,53 +21,106 @@ local faces = {
 				"rbxassetid://11378285585"
 }
 
--- Khởi tạo entity
-local entity = spawner.Create({
+local entity = Spawner:Create({
 	Entity = {
 		Name = "A60",
-		Asset = "https://github.com/ppG64tre-Cool/Entity-spawn/blob/main/ReModelA60HC.rbxm?raw=true",
+		Asset = "https://github.com/ppG64tre-Cool/Entity-spawn/raw/main/ReModelA60HC.rbxm",
 		HeightOffset = 1
 	},
 	Lights = {
-		Flicker = {Enabled = false, Duration = 10},
+		Flicker = {
+			Enabled = false,
+			Duration = 1
+		},
 		Shatter = false,
 		Repair = false
 	},
-	Earthquake = {Enabled = true},
+	Earthquake = {
+		Enabled = true
+	},
 	CameraShake = {
 		Enabled = true,
-		Range = 100,
-		Values = {20, 30, 0.1, 0.1}
+		Range = 135,
+		Values = {20, 30, 0.1, 0.1} -- Magnitude, Roughness, FadeIn, FadeOut
 	},
 	Movement = {
-		Speed = 300,
-		Delay = 8,
+		Speed = 275,
+		Delay = 7.5,
 		Reversed = false
 	},
 	Rebounding = {
 		Enabled = true,
-		Type = "Ambush",
-		Min = 4,
+		Type = "Ambush", -- "Blitz"
+		Min = 3,
 		Max = 10,
 		Delay = 0.5
 	},
 	Damage = {
 		Enabled = true,
+		IgnoreHiding = false,
 		Range = 100,
 		Amount = 0
 	},
 	Crucifixion = {
+        Type = "Guiding",
 		Enabled = true,
 		Range = math.huge,
 		Resist = true,
-		Break = true
+		Break = false
 	},
 	Death = {
-		Type = "Guiding",
+		Type = "Curious", -- "Curious"
 		Hints = {"Death", "Hints", "Go", "Here"},
 		Cause = ""
 	}
 })
+
+-- local entity = spawner.Create({
+-- 	Entity = {
+-- 		Name = "A60",
+-- 		Asset = "https://github.com/ppG64tre-Cool/Entity-spawn/blob/main/ReModelA60HC.rbxm?raw=true",
+-- 		HeightOffset = 1
+-- 	},
+-- 	Lights = {
+-- 		Flicker = {Enabled = false, Duration = 10},
+-- 		Shatter = false,
+-- 		Repair = false
+-- 	},
+-- 	Earthquake = {Enabled = true},
+-- 	CameraShake = {
+-- 		Enabled = true,
+-- 		Range = 100,
+-- 		Values = {20, 30, 0.1, 0.1}
+-- 	},
+-- 	Movement = {
+-- 		Speed = 300,
+-- 		Delay = 8,
+-- 		Reversed = false
+-- 	},
+-- 	Rebounding = {
+-- 		Enabled = true,
+-- 		Type = "Ambush",
+-- 		Min = 4,
+-- 		Max = 10,
+-- 		Delay = 0.5
+-- 	},
+-- 	Damage = {
+-- 		Enabled = true,
+-- 		Range = 100,
+-- 		Amount = 0
+-- 	},
+-- 	Crucifixion = {
+-- 		Enabled = true,
+-- 		Range = math.huge,
+-- 		Resist = true,
+-- 		Break = true
+-- 	},
+-- 	Death = {
+-- 		Type = "Guiding",
+-- 		Hints = {"Death", "Hints", "Go", "Here"},
+-- 		Cause = ""
+-- 	}
+-- })
 
 -- Hiệu ứng ánh sáng
 
