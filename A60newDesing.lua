@@ -308,4 +308,4 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 end)
 
 -- ================== CHẠY ENTITY ==================
-entity:Run()
+entity:Run(true)
