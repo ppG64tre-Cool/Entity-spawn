@@ -105,7 +105,7 @@ entity:SetCallback("OnSpawned", function()
 	local part = entity.Model
 	local object = part:WaitForChild("RushNew")
 	local attachment = object:WaitForChild("Main")
-	local emitter = attachment:FindFirstChildWhichIsA("ParticleEmitter")
+	local emitter = attachment:FindFirstChildWhichIsA("Face")
 	local ambiencesound = part:WaitForChild("AmbienceSounds")
 	for _,sounds in pairs(part:GetDescendants()) do
 		if sounds:IsA("Sound") and sounds:IsDescendantOf(ambiencesound) then
