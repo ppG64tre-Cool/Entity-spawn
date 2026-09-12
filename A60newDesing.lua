@@ -33,7 +33,7 @@ local entity = spawner.Create({
 	Lights = {
 		Flicker = {Enabled = false, Duration = 10},
 		Shatter = false,
-		Repair = false
+		Repair = true
 	},
 	Earthquake = {Enabled = true},
 	CameraShake = {
@@ -61,8 +61,8 @@ local entity = spawner.Create({
 	Crucifixion = {
 		Enabled = true,
 		Range = math.huge,
-		Resist = false,
-		Break = true
+		Resist = true,
+		Break = false
 	},
 	Death = {
 		Type = "Guiding",
