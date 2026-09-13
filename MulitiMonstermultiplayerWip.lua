@@ -33,7 +33,8 @@ local LocalPlayer = Players.LocalPlayer
 local Host: Player? = Players:FindFirstChild("BUGc00lName") -- Put Host Name
 
 local activeClients = {} :: {Player}
-Multimanter = Spawner:Create({
+local listOfEntities = {
+    [1] = Spawner:Create({
 	Entity = {
 		Name = "A60",
 		Asset = "https://github.com/ppG64tre-Cool/Entity-spawn/raw/main/ReModelA60HC.rbxm",
@@ -86,6 +87,7 @@ Multimanter = Spawner:Create({
 		Cause = ""
 	}
 })
+}
 
 -- \\ Setup // --
 
@@ -111,16 +113,14 @@ task.spawn(function()
     end
 end)
 
-Communicator:Listen("SpawnEntity", function(sender: Player, name)
+Communicator:Listen("SpawnEntity", function(sender: Player, id: number)
     if sender ~= Host then
         -- Ignore commands not sent by Host
         return
     end
 
     -- Spawn entity with id
-    if name == "A60" then
-		Multimanter:Run(true)
-	end
+    listOfEntities[id]:Run(true)
 end)
 
 -- \\ Main // --
@@ -137,7 +137,7 @@ end)
 
 ----- when the
 
-Multimanter:SetCallback("OnSpawned", function()
+listOfEntities[1]:SetCallback("OnSpawned", function()
 	pcall(function()
         local lighting = game.Lighting
 		lighting.MainColorCorrection.TintColor = Color3.fromRGB(255, 0, 0)
@@ -161,7 +161,7 @@ Multimanter:SetCallback("OnSpawned", function()
 				
 	end)
 
-	local part = Multimanter.Model
+	local part = listOfEntities[1].Model
 	local object = part:WaitForChild("RushNew")
 	local attachment = object:WaitForChild("Main")
 	local emitter = attachment:FindFirstChildWhichIsA("ParticleEmitter")
@@ -195,7 +195,7 @@ Multimanter:SetCallback("OnSpawned", function()
 	end)
 end)
 
-Multimanter:SetCallback("OnDespawning", function()
+listOfEntities[1]:SetCallback("OnDespawning", function()
 		running = false
 
 		local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
@@ -219,7 +219,7 @@ Multimanter:SetCallback("OnDespawning", function()
 	end)
 
 -- ================== ON DAMAGE ==================
-Multimanter:SetCallback("OnDamagePlayer", function(newHealth)
+listOfEntities[1]:SetCallback("OnDamagePlayer", function(newHealth)
 	if newHealth == 0 then
 		warn("Player chết")
 		return
@@ -231,7 +231,7 @@ Multimanter:SetCallback("OnDamagePlayer", function(newHealth)
 		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
         camera = Workspace.CurrentCamera
 
-		local entityModel = Multimanter.Model
+		local entityModel = listOfEntities[1].Model
 		local primaryPart = entityModel and entityModel:FindFirstChild("RushNew")
 		if not primaryPart then return end
 
@@ -441,7 +441,7 @@ end)
 
 spawnButton.MouseButton1Click:Connect(function()
 	if LocalPlayer == Host then
-		Communicator:Send("SpawnEntity", "A60")
+		Communicator:Send("SpawnEntity", 1)
 		print("✓ Spawning entity...")
 		
 		-- Visual feedback
