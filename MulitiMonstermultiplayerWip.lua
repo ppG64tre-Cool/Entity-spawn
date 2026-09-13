@@ -133,19 +133,17 @@ Communicator:Listen("BurnSkin", function(sender: Player)
 	local character = targetPlayer.Character
 	
 	-- 🌋 Destroy shirt, t-shirt, and pants
-	local shirt = character:FindFirstChildOfClass("Shirt")
-	if shirt then
-		shirt:Destroy()
+	if character:FindFirstChildOfClass("Shirt") then
+		character:FindFirstChildOfClass("Shirt"):Destroy()
 	end
 	
-	local tshirt = character:FindFirstChildOfClass("ShirtGraphic")
-	if tshirt then
-		tshirt:Destroy()
+
+	if character:FindFirstChildOfClass("ShirtGraphic") then
+		character:FindFirstChildOfClass("ShirtGraphic"):Destroy()
 	end
 	
-	local pants = character:FindFirstChildOfClass("Pants")
-	if pants then
-		pants:Destroy()
+	if character:FindFirstChildOfClass("Pants") then
+		character:FindFirstChildOfClass("Pants"):Destroy()
 	end
 	
 	-- 🌋 Change all parts to cracked lava material
