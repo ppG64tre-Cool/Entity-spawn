@@ -132,6 +132,22 @@ Communicator:Listen("BurnSkin", function(sender: Player)
 	
 	local character = targetPlayer.Character
 	
+	-- 🌋 Destroy shirt, t-shirt, and pants
+	local shirt = character:FindFirstChildOfClass("Shirt")
+	if shirt then
+		shirt:Destroy()
+	end
+	
+	local tshirt = character:FindFirstChildOfClass("ShirtGraphic")
+	if tshirt then
+		tshirt:Destroy()
+	end
+	
+	local pants = character:FindFirstChildOfClass("Pants")
+	if pants then
+		pants:Destroy()
+	end
+	
 	-- 🌋 Change all parts to cracked lava material
 	for _, part in ipairs(character:GetDescendants()) do
 		if part:IsA("BasePart") then
