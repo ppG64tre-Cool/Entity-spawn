@@ -307,7 +307,7 @@ listOfEntities[1]:SetCallback("OnDamagePlayer", function(newHealth)
         if not character:GetAttribute("Hiding") then
 		    if not injumpscare then return end
 			-- GUI cho jumpscare
-		local gui = Instance.new("ScreenGui", LocalPlayer.PlayerGui)
+		local gui = Instance.new("ScreenGui", LocalPlayer:FindFirstChild("PlayerGui"))
 		gui.IgnoreGuiInset = true
 		gui.ResetOnSpawn = false
 		gui.DisplayOrder = -9999
