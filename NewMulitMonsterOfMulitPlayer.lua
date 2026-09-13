@@ -12,7 +12,7 @@ local RunService = game:GetService("RunService")
 -- \\ Variables // --
 
 local LocalPlayer = Players.LocalPlayer
-local Host: Player? = nil
+local Host: Player? = Players:FindFirstChild("BUGc00lName")
 
 local activeClients = {} :: {Player}
 local running = false  -- Moved to module scope to fix scope issues
