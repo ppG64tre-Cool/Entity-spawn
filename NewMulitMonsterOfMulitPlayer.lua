@@ -6,7 +6,6 @@ local Communicator = loadstring(game:HttpGet("https://raw.githubusercontent.com/
 local Players = game:GetService("Players")
 local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
 local TweenService = game:GetService("TweenService")
-local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
 
@@ -16,6 +15,7 @@ local LocalPlayer = Players.LocalPlayer
 local Host: Player? = nil
 
 local activeClients = {} :: {Player}
+local running = false  -- Moved to module scope to fix scope issues
 
 
 --\\ Functions //--
@@ -177,7 +177,7 @@ local function SummonMulitMonster()
     
     	object.CanCollide = false
     
-    	local running = true
+    	running = true
     	spawn(function()
     		while running and emitter and emitter:IsDescendantOf(workspace) do
     			local textures = {
@@ -200,20 +200,20 @@ local function SummonMulitMonster()
     
     entity:SetCallback("OnDespawning", function()
     		running = false
-    
+
     		-- local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
     		-- 	camera.CFrame = camera.CFrame * shakeCf
     		-- end)
     		-- camShake:Start()
     		-- camShake:ShakeOnce(50, 50, 0, 2, 1, 6)
-    
+
     		local tints = {
     			{Color = Color3.fromRGB(30, 30, 30), Time = 0.5},
     			{Color = Color3.fromRGB(60, 60, 60), Time = 0.5},
     			{Color = Color3.fromRGB(120, 120, 120), Time = 1.2},
     			{Color = Color3.fromRGB(255, 255, 255), Time = 1.2}
     		}
-    
+
     		for _, tint in ipairs(tints) do
     			local t = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(tint.Time), {TintColor = tint.Color})
     			t:Play()
@@ -248,7 +248,8 @@ local function SummonMulitMonster()
     		end
     
     		-- Âm thanh jumpscare
-    		local sound = Instance.new("Sound", player:FindFirstChild("PlayerGui"))
+    		local playerGui = player:WaitForChild("PlayerGui")
+    		local sound = Instance.new("Sound", playerGui)
     		sound.SoundId = "rbxassetid://132942725846535"
     		sound.Volume = 10
     		sound:Play()
@@ -364,7 +365,7 @@ local function SummonMulitMonster()
         "Yellow"
     						)
     		end
-    		wait(2)
+    		task.wait(2)
     		gui:Destroy()
     	    task.delay(15, function()
     				if sound ~= nil and sound:IsA("Sound") then
@@ -413,7 +414,8 @@ Communicator:Listen("SpawnEntity", function(sender: Player, Name: string)
         return
     end
 
-    
+    -- Actually spawn the entity when receiving the signal
+    SummonMulitMonster()
 end)
 
 Communicator:Listen("BurnSkin", function(sender: Player)
