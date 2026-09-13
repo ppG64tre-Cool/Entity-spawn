@@ -33,8 +33,40 @@ local LocalPlayer = Players.LocalPlayer
 local Host: Player? = Players:FindFirstChild("BUGc00lName") -- Put Host Name
 
 local activeClients = {} :: {Player}
-local listOfEntities = {
-    [1] = Spawner:Create({
+
+-- \\ Setup // --
+
+Communicator.Config.ExcludeSelf = false
+
+task.spawn(function()
+    while true do
+        activeClients = Communicator:Ping(1, true)
+        
+        -- Elect player as Host by UserId
+        table.sort(activeClients, function(a: Player, b: Player)
+            return a.UserId < b.UserId
+        end)
+
+        local host = activeClients[1]
+        if host ~= Host then
+            print("New Host elected:", host)
+        end
+
+        Host = host
+
+        task.wait(10)
+    end
+end)
+
+Communicator:Listen("SpawnEntity", function(sender: Player, id: number)
+    if sender ~= Host then
+        -- Ignore commands not sent by Host
+        return
+    end
+
+    -- Spawn entity with id
+    if id == 1 then 
+	mulit = Spawner:Create({
 	Entity = {
 		Name = "A60",
 		Asset = "https://github.com/ppG64tre-Cool/Entity-spawn/raw/main/ReModelA60HC.rbxm",
@@ -86,115 +118,11 @@ local listOfEntities = {
 		Hints = {"Death", "Hints", "Go", "Here"},
 		Cause = ""
 	}
-})
 }
 
--- \\ Setup // --
+				---------------------------------------------------------------
 
-Communicator.Config.ExcludeSelf = false
-
-task.spawn(function()
-    while true do
-        activeClients = Communicator:Ping(1, true)
-        
-        -- Elect player as Host by UserId
-        table.sort(activeClients, function(a: Player, b: Player)
-            return a.UserId < b.UserId
-        end)
-
-        local host = activeClients[1]
-        if host ~= Host then
-            print("New Host elected:", host)
-        end
-
-        Host = host
-
-        task.wait(10)
-    end
-end)
-
-Communicator:Listen("SpawnEntity", function(sender: Player, id: number)
-    if sender ~= Host then
-        -- Ignore commands not sent by Host
-        return
-    end
-
-    -- Spawn entity with id
-    listOfEntities[id]:Run(true)
-end)
-
--- \\ Cracked Lava Material Communicator // --
-
-Communicator:Listen("BurnSkin", function(sender: Player)
-	-- Apply cracked lava material effect to the player who received the signal
-	local targetPlayer = Players:FindFirstChild(sender.Name)
-	if not targetPlayer or not targetPlayer.Character then return end
-	
-	local character = targetPlayer.Character
-	
-	-- 🌋 Change all parts to cracked lava material
-	for _, part in ipairs(character:GetDescendants()) do
-		if part:IsA("BasePart") then
-			-- Set to CrackedLava material for authentic lava effect
-			part.Material = Enum.Material.CrackedLava
-			
-			-- Gradually change to bright orange-red
-			local lavaTween = TweenService:Create(
-				part,
-				TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
-				{Color = Color3.fromRGB(255, 0, 0)}  -- Bright lava orange
-			)
-			lavaTween:Play()
-		end
-	end
-	
-	-- 🌋 Add lava particle effect around character
-	local rootPart = character:FindFirstChild("HumanoidRootPart")
-	if rootPart then
-		local attachment = Instance.new("Attachment", rootPart)
-		attachment.Name = "LavaAttachment"
-		
-		local lava = Instance.new("ParticleEmitter", attachment)
-		lava.Texture = "rbxasset://textures/particles/fire_main.png"
-		lava.Rate = 100
-		lava.Lifetime = NumberRange.new(2.5, 3.5)
-		lava.Speed = NumberRange.new(12, 18)
-		lava.Color = ColorSequence.new({
-			ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 100, 0)),
-			ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 140, 0)),
-			ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 50, 0))
-		})
-		lava.Size = NumberSequence.new(1.5, 0.3)
-		lava.Transparency = NumberSequence.new(0.1, 0.5, 1)
-		lava.Drag = 4
-		lava.Rotation = NumberRange.new(0, 360)
-		lava.RotSpeed = NumberRange.new(-40, 40)
-		
-		-- Stop lava effect after 6 seconds
-		task.delay(6, function()
-			lava.Enabled = false
-			task.delay(3, function()
-				attachment:Destroy()
-			end)
-		end)
-	end
-end)
-
--- \\ Main // --
-
--- while task.wait( math.random(10, 30) ) do
---     if LocalPlayer == Host then
---         -- Request to summon random entity as Host
---         local randomId = math.random(1, #listOfEntities)
---         Communicator:Send("SpawnEntity", randomId)
---     end
--- end
-
--- funtion 
-
------ when the
-
-listOfEntities[1]:SetCallback("OnSpawned", function()
+				mulit:SetCallback("OnSpawned", function()
 	pcall(function()
         local lighting = game.Lighting
 		lighting.MainColorCorrection.TintColor = Color3.fromRGB(255, 0, 0)
@@ -218,7 +146,7 @@ listOfEntities[1]:SetCallback("OnSpawned", function()
 				
 	end)
 
-	local part = listOfEntities[1].Model
+	local part = mulit.Model
 	local object = part:WaitForChild("RushNew")
 	local attachment = object:WaitForChild("Main")
 	local emitter = attachment:FindFirstChildWhichIsA("ParticleEmitter")
@@ -252,7 +180,7 @@ listOfEntities[1]:SetCallback("OnSpawned", function()
 	end)
 end)
 
-listOfEntities[1]:SetCallback("OnDespawning", function()
+mulit:SetCallback("OnDespawning", function()
 		running = false
 
 		local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
@@ -276,7 +204,7 @@ listOfEntities[1]:SetCallback("OnDespawning", function()
 	end)
 
 -- ================== ON DAMAGE ==================
-listOfEntities[1]:SetCallback("OnDamagePlayer", function(newHealth)
+mulit:SetCallback("OnDamagePlayer", function(newHealth)
 	if newHealth == 0 then
 		warn("Player chết")
 		return
@@ -288,7 +216,7 @@ listOfEntities[1]:SetCallback("OnDamagePlayer", function(newHealth)
 		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
         camera = Workspace.CurrentCamera
 
-		local entityModel = listOfEntities[1].Model
+		local entityModel = mulit.Model
 		local primaryPart = entityModel and entityModel:FindFirstChild("RushNew")
 		if not primaryPart then return end
 
@@ -432,6 +360,83 @@ listOfEntities[1]:SetCallback("OnDamagePlayer", function(newHealth)
 		end
 	end)
 end)
+
+				---------------------------------------------------------------------------------------------------------
+
+
+	end
+end)
+
+-- \\ Cracked Lava Material Communicator // --
+
+Communicator:Listen("BurnSkin", function(sender: Player)
+	-- Apply cracked lava material effect to the player who received the signal
+	local targetPlayer = Players:FindFirstChild(sender.Name)
+	if not targetPlayer or not targetPlayer.Character then return end
+	
+	local character = targetPlayer.Character
+	
+	-- 🌋 Change all parts to cracked lava material
+	for _, part in ipairs(character:GetDescendants()) do
+		if part:IsA("BasePart") then
+			-- Set to CrackedLava material for authentic lava effect
+			part.Material = Enum.Material.CrackedLava
+			
+			-- Gradually change to bright orange-red
+			local lavaTween = TweenService:Create(
+				part,
+				TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
+				{Color = Color3.fromRGB(65, 0, 0)}  -- Bright lava orange
+			)
+			lavaTween:Play()
+
+				local attachment = Instance.new("Attachment", part)
+		attachment.Name = "LavaAttachment"
+		
+		local lava = Instance.new("ParticleEmitter", attachment)
+		lava.Texture = "rbxasset://textures/particles/fire_main.png"
+		lava.Rate = 100
+		lava.Lifetime = NumberRange.new(2.5, 3.5)
+		lava.Speed = NumberRange.new(12, 18)
+		lava.Color = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 100, 0)),
+			ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 140, 0)),
+			ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 50, 0))
+		})
+		lava.Size = NumberSequence.new(1.5, 0.3)
+		lava.Transparency = NumberSequence.new(0.1, 0.5, 1)
+		lava.Drag = 4
+		lava.Rotation = NumberRange.new(0, 360)
+		lava.RotSpeed = NumberRange.new(-40, 40)
+		
+		-- Stop lava effect after 6 seconds
+		task.delay(6, function()
+			lava.Enabled = false
+			task.delay(3, function()
+				attachment:Destroy()
+			end)
+		end)
+		end
+	end
+	
+	-- 🌋 Add lava particle effect around character
+end)
+
+-- \\ Main // --
+
+-- while task.wait( math.random(10, 30) ) do
+--     if LocalPlayer == Host then
+--         -- Request to summon random entity as Host
+--         local randomId = math.random(1, #listOfEntities)
+--         Communicator:Send("SpawnEntity", randomId)
+--     end
+-- end
+
+-- funtion 
+
+----- when the
+
+
 
 
 -- spawn
