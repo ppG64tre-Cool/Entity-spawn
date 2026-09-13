@@ -27,6 +27,8 @@ if not game.ReplicatedStorage.CameraShaker then return end
 
 local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
 
+local camera = Workspace.CurrentCamera
+
 local LocalPlayer = Players.LocalPlayer
 local Host: Player? = Players:FindFirstChild("BUGc00lName") -- Put Host Name
 
@@ -374,6 +376,99 @@ end)
 -- spawn
 
 if LocalPlayer == Host then
-        -- Request to summon random entity as Host
-      Communicator:Send("SpawnEntity", 1)
+       -- Add this section after your Communicator setup (after line 122)
+
+-- \\ GUI SETUP FOR HOST // --
+
+local gui_spawner = LocalPlayer:WaitForChild("PlayerGui")
+local screenGui = Instance.new("ScreenGui", gui_spawner)
+screenGui.Name = "SpawnControlGui"
+screenGui.ResetOnSpawn = false
+screenGui.Enabled = false  -- Will be enabled when player is Host
+
+-- Main Frame (Container)
+local mainFrame = Instance.new("Frame", screenGui)
+mainFrame.Name = "MainFrame"
+mainFrame.Size = UDim2.new(0, 250, 0, 180)
+mainFrame.Position = UDim2.new(0.02, 0, 0.5, -90)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+mainFrame.BorderSizePixel = 2
+mainFrame.BorderColor3 = Color3.fromRGB(255, 0, 0)
+
+-- Title Label
+local titleLabel = Instance.new("TextLabel", mainFrame)
+titleLabel.Name = "Title"
+titleLabel.Size = UDim2.new(1, 0, 0, 40)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+titleLabel.BorderSizePixel = 0
+titleLabel.Text = "🔴 SPAWN CONTROL"
+titleLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+titleLabel.TextSize = 16
+titleLabel.Font = Enum.Font.GothamBold
+
+-- Host Status Label
+local statusLabel = Instance.new("TextLabel", mainFrame)
+statusLabel.Name = "Status"
+statusLabel.Size = UDim2.new(1, 0, 0, 30)
+statusLabel.Position = UDim2.new(0, 0, 0, 40)
+statusLabel.BackgroundTransparency = 1
+statusLabel.Text = "Host: " .. (Host and Host.Name or "None")
+statusLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
+statusLabel.TextSize = 12
+statusLabel.Font = Enum.Font.Gotham
+
+-- Spawn Button
+local spawnButton = Instance.new("TextButton", mainFrame)
+spawnButton.Name = "SpawnButton"
+spawnButton.Size = UDim2.new(0.9, 0, 0, 50)
+spawnButton.Position = UDim2.new(0.05, 0, 0, 70)
+spawnButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+spawnButton.BorderSizePixel = 0
+spawnButton.Text = "SPAWN ENTITY"
+spawnButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+spawnButton.TextSize = 14
+spawnButton.Font = Enum.Font.GothamBold
+
+-- Button hover effects
+spawnButton.MouseEnter:Connect(function()
+	spawnButton.BackgroundColor3 = Color3.fromRGB(220, 70, 70)
+end)
+
+spawnButton.MouseLeave:Connect(function()
+	spawnButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+end)
+
+spawnButton.MouseButton1Click:Connect(function()
+	if LocalPlayer == Host then
+		Communicator:Send("SpawnEntity", 1)
+		print("✓ Spawning entity...")
+		
+		-- Visual feedback
+		spawnButton.BackgroundColor3 = Color3.fromRGB(100, 255, 100)
+		spawnButton.Text = "SPAWNED!"
+		task.wait(0.5)
+		spawnButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+		spawnButton.Text = "SPAWN ENTITY"
+	else
+		print("✗ Only the host can spawn entities!")
+	end
+end)
+
+-- Update Host status periodically
+task.spawn(function()
+	while true do
+		task.wait(1)
+		if LocalPlayer == Host then
+			screenGui.Enabled = true
+			statusLabel.Text = "✓ YOU ARE HOST"
+			statusLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
+			spawnButton.BackgroundColor3 = Color3.fromRGB(100, 200, 100)
+		else
+			statusLabel.Text = "✗ Not Host"
+			statusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+			spawnButton.BackgroundColor3 = Color3.fromRGB(150, 150, 150)
+		end
+	end
+end)
 end
