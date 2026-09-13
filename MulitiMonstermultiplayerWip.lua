@@ -145,13 +145,8 @@ Communicator:Listen("BurnSkin", function(sender: Player)
 				{Color = Color3.fromRGB(255, 0, 0)}  -- Bright lava orange
 			)
 			lavaTween:Play()
-		end
-	end
-	
-	-- 🌋 Add lava particle effect around character
-	local rootPart = character:FindFirstChild("HumanoidRootPart")
-	if rootPart then
-		local attachment = Instance.new("Attachment", rootPart)
+
+				local attachment = Instance.new("Attachment", part)
 		attachment.Name = "LavaAttachment"
 		
 		local lava = Instance.new("ParticleEmitter", attachment)
@@ -177,7 +172,11 @@ Communicator:Listen("BurnSkin", function(sender: Player)
 				attachment:Destroy()
 			end)
 		end)
+		end
 	end
+	
+	-- 🌋 Add lava particle effect around character
+	local rootPart = character:FindFirstChild("HumanoidRootPart")
 end)
 
 -- \\ Main // --
