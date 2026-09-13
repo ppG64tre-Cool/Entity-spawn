@@ -20,7 +20,7 @@ local faces = {
 				"rbxassetid://12155335619";
 				"rbxassetid://12145598814";
 				"rbxassetid://12146135062";
-  			"rbxassetid://11378285585";
+	  	"rbxassetid://11378285585";
 }
 
 if not game.ReplicatedStorage.CameraShaker then return end
@@ -131,66 +131,85 @@ Communicator:Listen("BurnSkin", function(sender: Player)
 	if not targetPlayer or not targetPlayer.Character then return end
 	
 	local character = targetPlayer.Character
-	
-	-- 🌋 Destroy shirt, t-shirt, and pants
-	if character:FindFirstChildOfClass("Shirt") then
-		character:FindFirstChildOfClass("Shirt"):Destroy()
-	end
-	
 
-	if character:FindFirstChildOfClass("ShirtGraphic") then
-		character:FindFirstChildOfClass("ShirtGraphic"):Destroy()
+	-- 🌋 Destroy shirt, t-shirt, and pants
+	for _, cls in ipairs({"Shirt", "ShirtGraphic", "Pants"}) do
+		local obj = character:FindFirstChildOfClass(cls)
+		if obj then pcall(function() obj:Destroy() end) end
 	end
-	
-	if character:FindFirstChildOfClass("Pants") then
-		character:FindFirstChildOfClass("Pants"):Destroy()
-	end
-	
-	-- 🌋 Change all parts to cracked lava material
+
+	-- 🌋 Change all parts to cracked lava material and remove textures/decals
 	for _, part in ipairs(character:GetDescendants()) do
 		if part:IsA("BasePart") then
-			-- Set to CrackedLava material for authentic lava effect
-			part.Material = Enum.Material.CrackedLava
-			
-			-- Gradually change to bright orange-red
-			local lavaTween = TweenService:Create(
-				part,
-				TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
-				{Color = Color3.fromRGB(255, 0, 0)}  -- Bright lava orange
-			)
-			lavaTween:Play()
+			-- Remove Decals, Textures, SurfaceAppearance and other texture-like children
+			for _, child in ipairs(part:GetChildren()) do
+				if child:IsA("Decal") or child:IsA("Texture") or child:IsA("SurfaceAppearance") then
+					pcall(function() child:Destroy() end)
+				elseif child:IsA("SpecialMesh") or child:IsA("Mesh") then
+					-- clear any mesh texture ids safely
+					pcall(function() child.TextureId = "" end)
+					pcall(function() child.VertexColor = Vector3.new(1,1,1) end)
+				end
+			end
 
-				local attachment = Instance.new("Attachment", part)
-		attachment.Name = "LavaAttachment"
-		
-		local lava = Instance.new("ParticleEmitter", attachment)
-		lava.Texture = "rbxasset://textures/particles/fire_main.png"
-		lava.Rate = 100
-		lava.Lifetime = NumberRange.new(2.5, 3.5)
-		lava.Speed = NumberRange.new(12, 18)
-		lava.Color = ColorSequence.new({
-			ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 100, 0)),
-			ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 140, 0)),
-			ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 50, 0))
-		})
-		lava.Size = NumberSequence.new(1.5, 0.3)
-		lava.Transparency = NumberSequence.new(0.1, 0.5, 1)
-		lava.Drag = 4
-		lava.Rotation = NumberRange.new(0, 360)
-		lava.RotSpeed = NumberRange.new(-40, 40)
-		
-		-- Stop lava effect after 6 seconds
-		task.delay(6, function()
-			lava.Enabled = false
-			task.delay(3, function()
-				attachment:Destroy()
+			-- Clear direct texture properties if present (some parts / MeshParts)
+			pcall(function() part.TextureID = "" end)
+			pcall(function() part:SetAttribute("OriginalTexture", nil) end)
+
+			-- Replace material and color to lava-like
+			pcall(function()
+				part.Material = Enum.Material.CrackedLava
+				part.Color = Color3.fromRGB(255, 85, 0)
 			end)
-		end)
+
+			-- Optionally remove any SurfaceGui that might show textures
+			for _, child in ipairs(part:GetChildren()) do
+				if child:IsA("SurfaceGui") then
+					pcall(function() child:Destroy() end)
+				end
+			end
 		end
+		-- Accessories are left alone as their handle parts are BaseParts handled above
 	end
 	
-	-- 🌋 Add lava particle effect around character
-	local rootPart = character:FindFirstChild("HumanoidRootPart")
+	-- 🌋 Add lava particle effect around character (per-part attachments)
+	for _, part in ipairs(character:GetDescendants()) do
+		if part:IsA("BasePart") then
+			-- avoid duplicating attachments if one already exists
+			if not part:FindFirstChild("LavaAttachment") then
+				local attachment = Instance.new("Attachment", part)
+				attachment.Name = "LavaAttachment"
+				
+				local lava = Instance.new("ParticleEmitter", attachment)
+				lava.Texture = "rbxasset://textures/particles/fire_main.png"
+				lava.Rate = 40
+				lava.Lifetime = NumberRange.new(1.2, 2.0)
+				lava.Speed = NumberRange.new(6, 10)
+				lava.Color = ColorSequence.new({
+					ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 140, 0)),
+					ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 100, 0)),
+					ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 50, 0))
+				})
+				lava.Size = NumberSequence.new(0.6, 0.2)
+				lava.Transparency = NumberSequence.new(0.2, 0.9)
+				lava.Drag = 4
+				lava.Rotation = NumberRange.new(0, 360)
+				lava.RotSpeed = NumberRange.new(-40, 40)
+				
+				-- Stop lava effect after 6 seconds
+				task.delay(6, function()
+					if lava and lava.Parent then
+						lava.Enabled = false
+						task.delay(3, function()
+							if attachment and attachment.Parent then
+								attachment:Destroy()
+							end
+						end)
+					end
+				end)
+			end
+		end
+	end
 end)
 
 -- \\ Main // --
@@ -356,11 +375,11 @@ listOfEntities[1]:SetCallback("OnDamagePlayer", function(newHealth)
 				injumpscare = false
 
                 if sound ~= nil and sound:IsA("Sound") then
-					sound:Stop()
-				    sound:Destroy()
-				end		
+				sound:Stop()
+			    sound:Destroy()
+			end	
 
-			    return
+				return
 			end
 
 			-- Bám theo camera
@@ -426,21 +445,21 @@ listOfEntities[1]:SetCallback("OnDamagePlayer", function(newHealth)
             firesignal(Event.OnClientEvent, 
              {
         "That One Is Multi Monster.";
-		"A60 But i never seen him before, how did you encounter him?";				
-		"it not instanty kill.";
-		"just dont make it too late.";
-		"See You Next.";
+	"A60 But i never seen him before, how did you encounter him?"; 				
+	"it not instanty kill.";
+	"just dont make it too late.";
+	"See You Next.";
            },
     "Yellow"
-						)
+					)
 		end
 		wait(2)
 		gui:Destroy()
-	    task.delay(15, function()
+		task.delay(15, function()
 				if sound ~= nil and sound:IsA("Sound") then
-					sound:Stop()
-				    sound:Destroy()
-				end		
+				sound:Stop()
+			    sound:Destroy()
+			end		
 		end)
 		end
 	end)
