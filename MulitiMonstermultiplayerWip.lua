@@ -33,8 +33,7 @@ local LocalPlayer = Players.LocalPlayer
 local Host: Player? = Players:FindFirstChild("BUGc00lName") -- Put Host Name
 
 local activeClients = {} :: {Player}
-local listOfEntities = {
-    [1] = Spawner:Create({
+Multimanter = Spawner:Create({
 	Entity = {
 		Name = "A60",
 		Asset = "https://github.com/ppG64tre-Cool/Entity-spawn/raw/main/ReModelA60HC.rbxm",
@@ -87,7 +86,6 @@ local listOfEntities = {
 		Cause = ""
 	}
 })
-}
 
 -- \\ Setup // --
 
@@ -113,14 +111,16 @@ task.spawn(function()
     end
 end)
 
-Communicator:Listen("SpawnEntity", function(sender: Player, id: number)
+Communicator:Listen("SpawnEntity", function(sender: Player, name)
     if sender ~= Host then
         -- Ignore commands not sent by Host
         return
     end
 
     -- Spawn entity with id
-    listOfEntities[id]:Run(true)
+    if name == "A60" then
+		Multimanter:Run(true)
+	end
 end)
 
 -- \\ Main // --
@@ -441,7 +441,7 @@ end)
 
 spawnButton.MouseButton1Click:Connect(function()
 	if LocalPlayer == Host then
-		Communicator:Send("SpawnEntity", 1)
+		Communicator:Send("SpawnEntity", "A60")
 		print("✓ Spawning entity...")
 		
 		-- Visual feedback
