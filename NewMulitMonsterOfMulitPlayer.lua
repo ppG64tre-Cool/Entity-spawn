@@ -528,6 +528,7 @@ if LocalPlayer == Host then
         local screenGui = Instance.new("ScreenGui", gui_spawner)
         screenGui.Name = "SpawnControlGui"
         screenGui.ResetOnSpawn = false
+		screenGui.DisplayOrder = 1000
         screenGui.Enabled = false  -- Will be enabled when player is Host
         
         -- Main Frame (Container)
