@@ -194,28 +194,28 @@ end)
 ----- when the
 
 listOfEntities[1]:SetCallback("OnSpawned", function()
-	pcall(function()
-        local lighting = game.Lighting
-		lighting.MainColorCorrection.TintColor = Color3.fromRGB(255, 0, 0)
-	    lighting.MainColorCorrection.Contrast = 0.2
-	    TweenService:Create(lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0}):Play()
-	TweenService:Create(lighting.MainColorCorrection, TweenInfo.new(20), {TintColor = Color3.fromRGB(255, 255, 255)}):Play()
+	-- pcall(function()
+ --        local lighting = game.Lighting
+	-- 	lighting.MainColorCorrection.TintColor = Color3.fromRGB(255, 0, 0)
+	--     lighting.MainColorCorrection.Contrast = 0.2
+	--     TweenService:Create(lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0}):Play()
+	-- TweenService:Create(lighting.MainColorCorrection, TweenInfo.new(20), {TintColor = Color3.fromRGB(255, 255, 255)}):Play()
 
-	-- Camera Shake
-	local camara = game.Workspace.CurrentCamera
-	local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
-		camara.CFrame = camara.CFrame * shakeCf
-	end)
-	camShake:Start()
-	camShake:ShakeOnce(40,70,0,4,2,12)
+	-- -- Camera Shake
+	-- local camara = game.Workspace.CurrentCamera
+	-- local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
+	-- 	camara.CFrame = camara.CFrame * shakeCf
+	-- end)
+	-- camShake:Start()
+	-- camShake:ShakeOnce(40,70,0,4,2,12)
 	
-	local camShake2 = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(cf)
-		camara.CFrame = camara.CFrame * cf
-	end)
-	camShake2:Start()
-	camShake2:Shake(CameraShaker.Presets.Earthquake)
+	-- local camShake2 = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(cf)
+	-- 	camara.CFrame = camara.CFrame * cf
+	-- end)
+	-- camShake2:Start()
+	-- camShake2:Shake(CameraShaker.Presets.Earthquake)
 				
-	end)
+	-- end)
 
 	local part = listOfEntities[1].Model
 	local object = part:WaitForChild("RushNew")
@@ -254,11 +254,11 @@ end)
 listOfEntities[1]:SetCallback("OnDespawning", function()
 		running = false
 
-		local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
-			camera.CFrame = camera.CFrame * shakeCf
-		end)
-		camShake:Start()
-		camShake:ShakeOnce(50, 50, 0, 2, 1, 6)
+		-- local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
+		-- 	camera.CFrame = camera.CFrame * shakeCf
+		-- end)
+		-- camShake:Start()
+		-- camShake:ShakeOnce(50, 50, 0, 2, 1, 6)
 
 		local tints = {
 			{Color = Color3.fromRGB(30, 30, 30), Time = 0.5},
