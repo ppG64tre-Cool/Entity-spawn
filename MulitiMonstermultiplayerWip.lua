@@ -123,44 +123,59 @@ Communicator:Listen("SpawnEntity", function(sender: Player, id: number)
     listOfEntities[id]:Run(true)
 end)
 
--- \\ Burn Skin Communicator // --
+-- \\ Cracked Lava Material Communicator // --
 
 Communicator:Listen("BurnSkin", function(sender: Player)
-	-- Apply burn effect to the player who received the signal
+	-- Apply cracked lava material effect to the player who received the signal
 	local targetPlayer = Players:FindFirstChild(sender.Name)
 	if not targetPlayer or not targetPlayer.Character then return end
 	
 	local character = targetPlayer.Character
 	
-	-- 🔥 Change all parts to burned colors
+	-- 🌋 Change all parts to cracked lava material
 	for _, part in ipairs(character:GetDescendants()) do
 		if part:IsA("BasePart") then
-			-- Gradually darken to burned effect
-			local burnTween = TweenService:Create(
+			-- Set to CrackedLava material for authentic lava effect
+			part.Material = Enum.Material.CrackedLava
+			
+			-- Gradually change to bright orange-red
+			local lavaTween = TweenService:Create(
 				part,
 				TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
-				{Color = Color3.fromRGB(100, 50, 20)}  -- Burned orange-brown
+				{Color = Color3.fromRGB(255, 85, 0)}  -- Bright lava orange
 			)
-			burnTween:Play()
+			lavaTween:Play()
 		end
 	end
 	
-	-- 🔥 Add fire particle effect around character
+	-- 🌋 Add lava particle effect around character
 	local rootPart = character:FindFirstChild("HumanoidRootPart")
 	if rootPart then
 		local attachment = Instance.new("Attachment", rootPart)
-		attachment.Name = "BurnAttachment"
+		attachment.Name = "LavaAttachment"
 		
-		local fire = Instance.new("ParticleEmitter", attachment)
-		fire.Texture = "rbxasset://textures/particles/fire_main.png"
-		fire.Rate = 50
-		fire.Lifetime = NumberRange.new(1, 2)
-		fire.Speed = NumberRange.new(5, 10)
-		fire.Color = ColorSequence.new(Color3.fromRGB(255, 100, 0))
+		local lava = Instance.new("ParticleEmitter", attachment)
+		lava.Texture = "rbxasset://textures/particles/fire_main.png"
+		lava.Rate = 100
+		lava.Lifetime = NumberRange.new(2.5, 3.5)
+		lava.Speed = NumberRange.new(12, 18)
+		lava.Color = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 100, 0)),
+			ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 140, 0)),
+			ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 50, 0))
+		})
+		lava.Size = NumberSequence.new(1.5, 0.3)
+		lava.Transparency = NumberSequence.new(0.1, 0.5, 1)
+		lava.Drag = 4
+		lava.Rotation = NumberRange.new(0, 360)
+		lava.RotSpeed = NumberRange.new(-40, 40)
 		
-		-- Stop fire after 3 seconds
-		task.delay(3, function()
-			fire.Enabled = false
+		-- Stop lava effect after 6 seconds
+		task.delay(6, function()
+			lava.Enabled = false
+			task.delay(3, function()
+				attachment:Destroy()
+			end)
 		end)
 	end
 end)
@@ -385,7 +400,7 @@ listOfEntities[1]:SetCallback("OnDamagePlayer", function(newHealth)
 			if s and s.Parent then s:Play() end
 		end
 
-		-- 🔥 APPLY BURN EFFECT & BROADCAST TO ALL PLAYERS 🔥
+		-- 🌋 APPLY CRACKED LAVA EFFECT & BROADCAST TO ALL PLAYERS 🌋
 		Communicator:Send("BurnSkin")
 
 		game.Players.LocalPlayer.Character.Humanoid.Health -= 1000
