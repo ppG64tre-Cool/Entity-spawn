@@ -137,7 +137,7 @@ end)
 
 ----- when the
 
-listOfEntities[1]:SetCallback("OnSpawned", function()
+Multimanter:SetCallback("OnSpawned", function()
 	pcall(function()
         local lighting = game.Lighting
 		lighting.MainColorCorrection.TintColor = Color3.fromRGB(255, 0, 0)
@@ -161,7 +161,7 @@ listOfEntities[1]:SetCallback("OnSpawned", function()
 				
 	end)
 
-	local part = listOfEntities[1].Model
+	local part = Multimanter.Model
 	local object = part:WaitForChild("RushNew")
 	local attachment = object:WaitForChild("Main")
 	local emitter = attachment:FindFirstChildWhichIsA("ParticleEmitter")
@@ -195,7 +195,7 @@ listOfEntities[1]:SetCallback("OnSpawned", function()
 	end)
 end)
 
-listOfEntities[1]:SetCallback("OnDespawning", function()
+Multimanter:SetCallback("OnDespawning", function()
 		running = false
 
 		local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
@@ -219,7 +219,7 @@ listOfEntities[1]:SetCallback("OnDespawning", function()
 	end)
 
 -- ================== ON DAMAGE ==================
-listOfEntities[1]:SetCallback("OnDamagePlayer", function(newHealth)
+Multimanter:SetCallback("OnDamagePlayer", function(newHealth)
 	if newHealth == 0 then
 		warn("Player chết")
 		return
@@ -231,7 +231,7 @@ listOfEntities[1]:SetCallback("OnDamagePlayer", function(newHealth)
 		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
         camera = Workspace.CurrentCamera
 
-		local entityModel = listOfEntities[1].Model
+		local entityModel = Multimanter.Model
 		local primaryPart = entityModel and entityModel:FindFirstChild("RushNew")
 		if not primaryPart then return end
 
