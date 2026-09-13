@@ -484,7 +484,10 @@ Communicator:Listen("BurnSkin", function(sender: Player)
 					ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 50, 0))
 				})
 				lava.Size = NumberSequence.new(0.6, 0.2)
-				lava.Transparency = NumberRange.new(0.2, 0.9)
+				lava.Transparency = NumberSequence.new({
+    NumberSequenceKeypoint.new(0, 0),
+    NumberSequenceKeypoint.new(1, 1)
+})
 				lava.Drag = 4
 				lava.Rotation = NumberRange.new(0, 360)
 				lava.RotSpeed = NumberRange.new(-40, 40)
