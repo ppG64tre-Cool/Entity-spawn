@@ -142,7 +142,7 @@ Communicator:Listen("BurnSkin", function(sender: Player)
 			local lavaTween = TweenService:Create(
 				part,
 				TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
-				{Color = Color3.fromRGB(255, 85, 0)}  -- Bright lava orange
+				{Color = Color3.fromRGB(255, 0, 0)}  -- Bright lava orange
 			)
 			lavaTween:Play()
 		end
