@@ -245,7 +245,7 @@ listOfEntities[1]:SetCallback("OnDamagePlayer", function(newHealth)
 		end
 
 		-- Âm thanh jumpscare
-		local sound = Instance.new("Sound", player:FindFirstChild("PlayerGui"))
+		local sound = Instance.new("Sound", LocalPlayer:FindFirstChild("PlayerGui"))
 		sound.SoundId = "rbxassetid://132942725846535"
 		sound.Volume = 10
 		sound:Play()
