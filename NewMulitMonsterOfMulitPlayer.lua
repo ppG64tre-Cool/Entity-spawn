@@ -595,3 +595,4 @@ if LocalPlayer == Host then
         		print("✗ Only the host can spawn entities!")
         	end
         end)
+end
