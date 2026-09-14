@@ -78,7 +78,7 @@ local function SummonMulitMonster()
     	},
     	Crucifixion = {
             Type = "Guiding",
-    		Enabled = true,
+    		Enabled = false,
     		Range = math.huge,
     		Resist = true,
     		Break = false
