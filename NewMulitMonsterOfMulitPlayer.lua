@@ -8,6 +8,7 @@ local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
 local TweenService = game:GetService("TweenService")
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
 
 -- \\ Variables // --
 
@@ -90,80 +91,8 @@ local function SummonMulitMonster()
     	}
     })
     
-    -- local entity = spawner.Create({
-    -- 	Entity = {
-    -- 		Name = "A60",
-    -- 		Asset = "https://github.com/ppG64tre-Cool/Entity-spawn/blob/main/ReModelA60HC.rbxm?raw=true",
-    -- 		HeightOffset = 1
-    -- 	},
-    -- 	Lights = {
-    -- 		Flicker = {Enabled = false, Duration = 10},
-    -- 		Shatter = false,
-    -- 		Repair = false
-    -- 	},
-    -- 	Earthquake = {Enabled = true},
-    -- 	CameraShake = {
-    -- 		Enabled = true,
-    -- 		Range = 100,
-    -- 		Values = {20, 30, 0.1, 0.1}
-    -- 	},
-    -- 	Movement = {
-    -- 		Speed = 300,
-    -- 		Delay = 8,
-    -- 		Reversed = false
-    -- 	},
-    -- 	Rebounding = {
-    -- 		Enabled = true,
-    -- 		Type = "Ambush",
-    -- 		Min = 4,
-    -- 		Max = 10,
-    -- 		Delay = 0.5
-    -- 	},
-    -- 	Damage = {
-    -- 		Enabled = true,
-    -- 		Range = 100,
-    -- 		Amount = 0
-    -- 	},
-    -- 	Crucifixion = {
-    -- 		Enabled = true,
-    -- 		Range = math.huge,
-    -- 		Resist = true,
-    -- 		Break = true
-    -- 	},
-    -- 	Death = {
-    -- 		Type = "Guiding",
-    -- 		Hints = {"Death", "Hints", "Go", "Here"},
-    -- 		Cause = ""
-    -- 	}
-    -- })
-    
-    -- Hiệu ứng ánh sáng
-    
     -- ================== ON SPAWN ==================
     entity:SetCallback("OnSpawned", function()
-    	-- pcall(function()
-     --        local lighting = game.Lighting
-    	-- 	lighting.MainColorCorrection.TintColor = Color3.fromRGB(255, 0, 0)
-    	--     lighting.MainColorCorrection.Contrast = 0.2
-    	--     TweenService:Create(lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0}):Play()
-    	-- TweenService:Create(lighting.MainColorCorrection, TweenInfo.new(20), {TintColor = Color3.fromRGB(255, 255, 255)}):Play()
-    
-    	-- -- Camera Shake
-    	-- local camara = game.Workspace.CurrentCamera
-    	-- local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
-    	-- 	camara.CFrame = camara.CFrame * shakeCf
-    	-- end)
-    	-- camShake:Start()
-    	-- camShake:ShakeOnce(40,70,0,4,2,12)
-    	
-    	-- local camShake2 = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(cf)
-    	-- 	camara.CFrame = camara.CFrame * cf
-    	-- end)
-    	-- camShake2:Start()
-    	-- camShake2:Shake(CameraShaker.Presets.Earthquake)
-    				
-    	-- end)
-    
     	local part = entity.Model
     	local object = part:WaitForChild("RushNew")
     	local attachment = object:WaitForChild("Main")
@@ -201,12 +130,6 @@ local function SummonMulitMonster()
     entity:SetCallback("OnDespawning", function()
     		running = false
 
-    		-- local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
-    		-- 	camera.CFrame = camera.CFrame * shakeCf
-    		-- end)
-    		-- camShake:Start()
-    		-- camShake:ShakeOnce(50, 50, 0, 2, 1, 6)
-
     		local tints = {
     			{Color = Color3.fromRGB(30, 30, 30), Time = 0.5},
     			{Color = Color3.fromRGB(60, 60, 60), Time = 0.5},
@@ -238,7 +161,7 @@ local function SummonMulitMonster()
     		local primaryPart = entityModel and entityModel:FindFirstChild("RushNew")
     		if not primaryPart then return end
     
-    		-- 🔇 Tắt tất cả âm thanh tạm thời
+    		-- Tắt tất cả âm thanh tạm thời
     		local allSounds = {}
     		for _, obj in ipairs(game:GetDescendants()) do
     			if obj:IsA("Sound") and obj.IsPlaying then
@@ -265,20 +188,9 @@ local function SummonMulitMonster()
     		moveTween:Play()
     		moveTween.Completed:Wait()
     
-    		-----------------------------------
-    		-- 🚫 KHÓA DI CHUYỂN NGƯỜI CHƠI
-    		-----------------------------------
-    		--humanoid.WalkSpeed = 0
-    		--humanoid.JumpPower = 0
-    		--humanoid.PlatformStand = true
-    
-    
-    		-----------------------------------
-    		-- 📌 CAMERA BÁM THEO (NHƯ CŨ)
-    		-----------------------------------
+    		-- CAMERA BÁM THEO
     		local camConn
     		camConn = RunService.RenderStepped:Connect(function()
-    			-- Nếu người chơi trốn, hủy jumpscare
     			if character:GetAttribute("Hiding") then
     				if camConn then camConn:Disconnect() end
     				camera.CameraType = Enum.CameraType.Custom
@@ -297,20 +209,15 @@ local function SummonMulitMonster()
     			    return
     			end
     
-    			-- Bám theo camera
     			local desiredPos = camera.CFrame.Position + camera.CFrame.LookVector * 4
     			primaryPart.CFrame = CFrame.new(desiredPos)
     			camera.CFrame = CFrame.lookAt(camera.CFrame.Position, primaryPart.Position)
     		end)
     
-    
-    		--------------------------------------------------------------------
-    		-- 😱 HIỆU ỨNG JUMPSCARE SAU 1 GIÂY (DISPLAY HÌNH ẢNH + TWEEN)
-    		--------------------------------------------------------------------
+    		-- HIỆU ỨNG JUMPSCARE SAU 1 GIÂY
     		task.wait(0.88)
             if not character:GetAttribute("Hiding") then
     		    if not injumpscare then return end
-    			-- GUI cho jumpscare
     		local gui = Instance.new("ScreenGui", player.PlayerGui)
     		gui.IgnoreGuiInset = true
     		gui.ResetOnSpawn = false
@@ -320,26 +227,24 @@ local function SummonMulitMonster()
     		local rng = Random.new()
             img.Image = faces[rng:NextInteger(1,#faces)]
     		img.BackgroundTransparency = 1
-    		img.Size = UDim2.fromScale(0.35, 0.35)          -- nhỏ lúc đầu
+    		img.Size = UDim2.fromScale(0.35, 0.35)
     		img.Position = UDim2.fromScale(0.325, 0.325)
     		img.Rotation = 0
             img.ImageColor3 = Color3.fromRGB(10, 10, 10)
     	    img.ScaleType = Enum.ScaleType.Fit
-    		img.ImageTransparency = 1                     -- bắt đầu ẩn
+    		img.ImageTransparency = 1
     
-    		-- Tween hiển thị + xoay + phóng to
     		local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
     		local tween = TweenService:Create(img, tweenInfo, {
-    			ImageTransparency = 0.25,                    -- hiện lên
-    			Rotation = Random.new():NextNumber(-25,25),                             -- xoay nhẹ sang phải
-    			Size = UDim2.fromScale(2, 2),         -- phóng to chút
+    			ImageTransparency = 0.25,
+    			Rotation = Random.new():NextNumber(-25,25),
+    			Size = UDim2.fromScale(2, 2),
     			Position = UDim2.fromScale(-0.5 + Random.new():NextNumber(-0.085,0.085), -0.5 + Random.new():NextNumber(-0.085,0.085))
     		})
     
     		tween:Play()
     		tween.Completed:Wait()
     
-    		-- Sau tween, bạn có thể thêm hiệu ứng khác nếu muốn
     		if camConn then camConn:Disconnect() end
     		camera.CameraType = Enum.CameraType.Custom
     
@@ -349,8 +254,6 @@ local function SummonMulitMonster()
     		game.Players.LocalPlayer.Character.Humanoid.Health -= 1000
     		game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Multi Monster"
         Communicator:Send("BurnSkin")
-    		-- This code was generated by Cobalt
-    -- https://github.com/notpoiu/cobalt
     
             if game:GetService("ReplicatedStorage").RemotesFolder.DeathHint then
     			local Event = game:GetService("ReplicatedStorage").RemotesFolder.DeathHint
@@ -390,7 +293,6 @@ task.spawn(function()
     while true do
         activeClients = Communicator:Ping(1, true)
         
-        -- Elect player as Host by UserId
         table.sort(activeClients, function(a: Player, b: Player)
             return a.UserId < b.UserId
         end)
@@ -407,68 +309,54 @@ task.spawn(function()
 end)
 
 
-
 Communicator:Listen("SpawnEntity", function(sender: Player, Name: string)
     if sender ~= Host then
-        -- Ignore commands not sent by Host
         return
     end
 
-    -- Actually spawn the entity when receiving the signal
     SummonMulitMonster()
 end)
 
 Communicator:Listen("BurnSkin", function(sender: Player)
-	-- Apply cracked lava material effect to the player who received the signal
 	local targetPlayer = Players:FindFirstChild(sender.Name)
 	if not targetPlayer or not targetPlayer.Character then return end
 	
 	local character = targetPlayer.Character
 
-	-- 🌋 Destroy shirt, t-shirt, and pants
 	for _, cls in ipairs({"Shirt", "ShirtGraphic", "Pants"}) do
 		local obj = character:FindFirstChildOfClass(cls)
 		if obj then pcall(function() obj:Destroy() end) end
 	end
 
-	-- 🌋 Change all parts to cracked lava material and remove textures/decals
 	for _, part in ipairs(character:GetDescendants()) do
 		if part:IsA("BasePart") then
-			-- Remove Decals, Textures, SurfaceAppearance and other texture-like children
 			for _, child in ipairs(part:GetChildren()) do
 				if child:IsA("Decal") or child:IsA("Texture") or child:IsA("SurfaceAppearance") then
 					pcall(function() child:Destroy() end)
 				elseif child:IsA("SpecialMesh") or child:IsA("Mesh") then
-					-- clear any mesh texture ids safely
 					pcall(function() child.TextureId = "" end)
 					pcall(function() child.VertexColor = Vector3.new(1,1,1) end)
 				end
 			end
 
-			-- Clear direct texture properties if present (some parts / MeshParts)
 			pcall(function() part.TextureID = "" end)
 			pcall(function() part:SetAttribute("OriginalTexture", nil) end)
 
-			-- Replace material and color to lava-like
 			pcall(function()
 				part.Material = Enum.Material.CrackedLava
 				part.Color = Color3.fromRGB(255, 85, 0)
 			end)
 
-			-- Optionally remove any SurfaceGui that might show textures
 			for _, child in ipairs(part:GetChildren()) do
 				if child:IsA("SurfaceGui") then
 					pcall(function() child:Destroy() end)
 				end
 			end
 		end
-		-- Accessories are left alone as their handle parts are BaseParts handled above
 	end
 	
-	-- 🌋 Add lava particle effect around character (per-part attachments)
 	for _, part in ipairs(character:GetDescendants()) do
 		if part:IsA("BasePart") then
-			-- avoid duplicating attachments if one already exists
 			if not part:FindFirstChild("LavaAttachment") then
 				local attachment = Instance.new("Attachment", part)
 				attachment.Name = "LavaAttachment"
@@ -489,7 +377,6 @@ Communicator:Listen("BurnSkin", function(sender: Player)
 				lava.Rotation = NumberRange.new(0, 360)
 				lava.RotSpeed = NumberRange.new(-40, 40)
 				
-				-- Stop lava effect after 6 seconds
 				task.delay(6, function()
 					if lava and lava.Parent then
 						lava.Enabled = false
@@ -507,109 +394,148 @@ end)
 
 -- \\ Main // --
 
--- while task.wait( math.random(10, 30) ) do
---     if LocalPlayer == Host then
---         -- Request to summon random entity as Host
---         local randomId = math.random(1, #listOfEntities)
---         Communicator:Send("SpawnEntity", randomId)
---     end
--- end
-
-
 if LocalPlayer == Host then
-               -- Add this section after your Communicator setup (after line 122)
-        
-        -- \\ GUI SETUP FOR HOST // --
-        
-        local gui_spawner = LocalPlayer:WaitForChild("PlayerGui")
-        local screenGui = Instance.new("ScreenGui", gui_spawner)
-        screenGui.Name = "SpawnControlGui"
-        screenGui.ResetOnSpawn = false
-        screenGui.Enabled = false  -- Will be enabled when player is Host
-        
-        -- Main Frame (Container)
-        local mainFrame = Instance.new("Frame", screenGui)
-        mainFrame.Name = "MainFrame"
-        mainFrame.Size = UDim2.new(0, 250, 0, 180)
-        mainFrame.Position = UDim2.new(0.02, 0, 0.5, -90)
-        mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-        mainFrame.BorderSizePixel = 2
-        mainFrame.BorderColor3 = Color3.fromRGB(255, 0, 0)
-        
-        -- Title Label
-        local titleLabel = Instance.new("TextLabel", mainFrame)
-        titleLabel.Name = "Title"
-        titleLabel.Size = UDim2.new(1, 0, 0, 40)
-        titleLabel.Position = UDim2.new(0, 0, 0, 0)
-        titleLabel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-        titleLabel.BorderSizePixel = 0
-        titleLabel.Text = "🔴 SPAWN CONTROL"
-        titleLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
-        titleLabel.TextSize = 16
-        titleLabel.Font = Enum.Font.GothamBold
-        
-        -- Host Status Label
-        local statusLabel = Instance.new("TextLabel", mainFrame)
-        statusLabel.Name = "Status"
-        statusLabel.Size = UDim2.new(1, 0, 0, 30)
-        statusLabel.Position = UDim2.new(0, 0, 0, 40)
-        statusLabel.BackgroundTransparency = 1
-        statusLabel.Text = "Host: " .. (Host and Host.Name or "None")
-        statusLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
-        statusLabel.TextSize = 12
-        statusLabel.Font = Enum.Font.Gotham
-        
-        -- Spawn Button
-        local spawnButton = Instance.new("TextButton", mainFrame)
-        spawnButton.Name = "SpawnButton"
-        spawnButton.Size = UDim2.new(0.9, 0, 0, 50)
-        spawnButton.Position = UDim2.new(0.05, 0, 0, 70)
-        spawnButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-        spawnButton.BorderSizePixel = 0
-        spawnButton.Text = "SPAWN ENTITY"
-        spawnButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-        spawnButton.TextSize = 14
-        spawnButton.Font = Enum.Font.GothamBold
-        
-        -- Button hover effects
-        spawnButton.MouseEnter:Connect(function()
-        	spawnButton.BackgroundColor3 = Color3.fromRGB(220, 70, 70)
-        end)
-        
-        spawnButton.MouseLeave:Connect(function()
-        	spawnButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-        end)
-        
-        spawnButton.MouseButton1Click:Connect(function()
-        	if LocalPlayer == Host then
-        		Communicator:Send("SpawnEntity", 1)
-        		print("✓ Spawning entity...")
-        		
-        		-- Visual feedback
-        		spawnButton.BackgroundColor3 = Color3.fromRGB(100, 255, 100)
-        		spawnButton.Text = "SPAWNED!"
-        		task.wait(0.5)
-        		spawnButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-        		spawnButton.Text = "SPAWN ENTITY"
-        	else
-        		print("✗ Only the host can spawn entities!")
-        	end
-        end)
+    -- \\ MOBILE-FRIENDLY HOST GUI SETUP // --
+    
+    local gui_spawner = LocalPlayer:WaitForChild("PlayerGui")
+    local screenGui = Instance.new("ScreenGui", gui_spawner)
+    screenGui.Name = "SpawnControlGui"
+    screenGui.ResetOnSpawn = false
+    screenGui.Enabled = false
+    
+    -- Main Container Frame
+    local mainFrame = Instance.new("Frame", screenGui)
+    mainFrame.Name = "MainFrame"
+    mainFrame.Size = UDim2.new(0, 240, 0, 170)
+    mainFrame.Position = UDim2.new(0.5, -120, 0.3, 0) -- Centered on screen for better touch reach
+    mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    mainFrame.BorderSizePixel = 2
+    mainFrame.BorderColor3 = Color3.fromRGB(255, 0, 0)
+    mainFrame.Visible = true
+    
+    local uiCornerFrame = Instance.new("UICorner", mainFrame)
+    uiCornerFrame.CornerRadius = UDim.new(0, 10)
 
-	    -- Update Host status periodically
-        task.spawn(function()
-        	while true do
-        		task.wait(1)
-        		if LocalPlayer == Host then
-        			screenGui.Enabled = true
-        			statusLabel.Text = "✓ YOU ARE HOST"
-        			statusLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
-        			spawnButton.BackgroundColor3 = Color3.fromRGB(100, 200, 100)
-        		else
-        			statusLabel.Text = "✗ Not Host"
-        			statusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
-        			spawnButton.BackgroundColor3 = Color3.fromRGB(150, 150, 150)
-        		end
-        	end
-        end)
+    -- Floating Mobile Toggle Button (Draggable)
+    local toggleButton = Instance.new("TextButton", screenGui)
+    toggleButton.Name = "MobileToggle"
+    toggleButton.Size = UDim2.new(0, 50, 0, 50) -- Large touch target for thumbs
+    toggleButton.Position = UDim2.new(0.05, 0, 0.3, 0)
+    toggleButton.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    toggleButton.BorderSizePixel = 2
+    toggleButton.BorderColor3 = Color3.fromRGB(255, 0, 0)
+    toggleButton.Text = "MENU"
+    toggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    toggleButton.TextSize = 11
+    toggleButton.Font = Enum.Font.GothamBold
+    toggleButton.Active = true
+
+    local uiCornerBtn = Instance.new("UICorner", toggleButton)
+    uiCornerBtn.CornerRadius = UDim.new(0.5, 0) -- Circular floating button
+
+    -- Dragging Logic for Mobile Touch
+    local dragging = false
+    local dragStart = Vector3.new()
+    local startPos = UDim2.new()
+    local hasMoved = false
+
+    toggleButton.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            hasMoved = false
+            dragStart = input.Position
+            startPos = toggleButton.Position
+
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+            local delta = input.Position - dragStart
+            if delta.Magnitude > 6 then
+                hasMoved = true
+            end
+            toggleButton.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+    end)
+
+    -- Open/Close Panel on Touch Tap (only if not dragging)
+    toggleButton.Activated:Connect(function()
+        if not hasMoved then
+            mainFrame.Visible = not mainFrame.Visible
+        end
+    end)
+
+    -- Title Label
+    local titleLabel = Instance.new("TextLabel", mainFrame)
+    titleLabel.Name = "Title"
+    titleLabel.Size = UDim2.new(1, 0, 0, 40)
+    titleLabel.Position = UDim2.new(0, 0, 0, 0)
+    titleLabel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    titleLabel.BorderSizePixel = 0
+    titleLabel.Text = "🔴 SPAWN CONTROL"
+    titleLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+    titleLabel.TextSize = 15
+    titleLabel.Font = Enum.Font.GothamBold
+
+    local uiCornerTitle = Instance.new("UICorner", titleLabel)
+    uiCornerTitle.CornerRadius = UDim.new(0, 10)
+
+    -- Host Status Label
+    local statusLabel = Instance.new("TextLabel", mainFrame)
+    statusLabel.Name = "Status"
+    statusLabel.Size = UDim2.new(1, 0, 0, 30)
+    statusLabel.Position = UDim2.new(0, 0, 0, 40)
+    statusLabel.BackgroundTransparency = 1
+    statusLabel.Text = "Host: " .. (Host and Host.Name or "None")
+    statusLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
+    statusLabel.TextSize = 12
+    statusLabel.Font = Enum.Font.Gotham
+    
+    -- Spawn Button
+    local spawnButton = Instance.new("TextButton", mainFrame)
+    spawnButton.Name = "SpawnButton"
+    spawnButton.Size = UDim2.new(0.9, 0, 0, 50)
+    spawnButton.Position = UDim2.new(0.05, 0, 0, 80)
+    spawnButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    spawnButton.BorderSizePixel = 0
+    spawnButton.Text = "SPAWN ENTITY"
+    spawnButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    spawnButton.TextSize = 14
+    spawnButton.Font = Enum.Font.GothamBold
+
+    local uiCornerSpawn = Instance.new("UICorner", spawnButton)
+    uiCornerSpawn.CornerRadius = UDim.new(0, 8)
+
+    spawnButton.Activated:Connect(function()
+    	if LocalPlayer == Host then
+    		Communicator:Send("SpawnEntity", 1)
+    		print("✓ Spawning entity...")
+    		
+    		spawnButton.BackgroundColor3 = Color3.fromRGB(100, 255, 100)
+    		spawnButton.Text = "SPAWNED!"
+    		task.wait(0.5)
+    		spawnButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    		spawnButton.Text = "SPAWN ENTITY"
+    	else
+    		print("✗ Only the host can spawn entities!")
+    	end
+    end)
+
+    -- Update Host status periodically
+    task.spawn(function()
+    	while true do
+    		task.wait(1)
+    		if LocalPlayer == Host then
+    			screenGui.Enabled = true
+    			statusLabel.Text = "✓ YOU ARE Host"
+    			statusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+    		end
+    	end
+    end)
 end
