@@ -595,4 +595,21 @@ if LocalPlayer == Host then
         		print("✗ Only the host can spawn entities!")
         	end
         end)
+
+	    -- Update Host status periodically
+        task.spawn(function()
+        	while true do
+        		task.wait(1)
+        		if LocalPlayer == Host then
+        			screenGui.Enabled = true
+        			statusLabel.Text = "✓ YOU ARE HOST"
+        			statusLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
+        			spawnButton.BackgroundColor3 = Color3.fromRGB(100, 200, 100)
+        		else
+        			statusLabel.Text = "✗ Not Host"
+        			statusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+        			spawnButton.BackgroundColor3 = Color3.fromRGB(150, 150, 150)
+        		end
+        	end
+        end)
 end
