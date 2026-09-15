@@ -966,10 +966,10 @@ Module.Run = function(self, entity: any, copyEntity: boolean)
             local charOrigin
             local OriginRoot 
 
-            if (Collision and Character:GetAttribute("Crouching")) and Character:GetAttribute("Crouching") == false then
+            if (Collision and Character:GetAttribute("Crouching") ~= nil) and not Character:GetAttribute("Crouching") then
                  charOrigin = Collision.Position
                  OriginRoot = Collision
-            elseif (CrouchCollision and Character:GetAttribute("Crouching")) and Character:GetAttribute("Crouching") == true then
+            elseif (CrouchCollision and Character:GetAttribute("Crouching") ~= nil) and Character:GetAttribute("Crouching") then
                  charOrigin = CrouchCollision.Position
                  OriginRoot = CrouchCollision
             else
