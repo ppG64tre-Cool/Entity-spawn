@@ -195,6 +195,14 @@ local function OnCharacterAdded(char: Model)
 	Humanoid = char:WaitForChild("Humanoid")
     RootPart = char.PrimaryPart or char:FindFirstChildWhichIsA("BasePart")
 
+    if Character:WaitForChild("CollisionCrouch") then
+      CrouchCollision = Character:WaitForChild("CollisionCrouch")
+    end
+
+    if Character:WaitForChild("Collision") then
+      Collision = Character:WaitForChild("Collision")
+    end
+
     Modules.Main_Game = require(PlayerGui:WaitForChild("MainUI").Initiator.Main_Game :: ModuleScript)
 end
 
