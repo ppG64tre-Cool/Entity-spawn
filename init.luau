@@ -979,7 +979,7 @@ Module.Run = function(self, entity: any, copyEntity: boolean)
             charOrigin = OriginRoot.Position
 
 
-            print(OriginRoot)
+            --print(OriginRoot)
             
             -- In Sight detection
             local inSight = false
