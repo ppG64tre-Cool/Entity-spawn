@@ -977,7 +977,7 @@ Module.Run = function(self, entity: any, copyEntity: boolean)
                  OriginRoot = RootPart
             end
 
-            print(charOrigin)
+            print(OriginRoot)
             
             -- In Sight detection
             local inSight = false
