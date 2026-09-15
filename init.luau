@@ -972,6 +972,8 @@ Module.Run = function(self, entity: any, copyEntity: boolean)
             else
                  charOrigin = RootPart.Position
             end
+
+            print(charOrigin)
             
             -- In Sight detection
             local inSight = false
