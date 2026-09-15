@@ -34,8 +34,8 @@ local Collision
 if Character:WaitForChild("Collision") then
       Collision = Character:WaitForChild("Collision")
 end
-if Character:WaitForChild("CollisionCrouch") then
-      CrouchCollision = Character:WaitForChild("CollisionCrouch")
+if Character:WaitForChild("CollisionCrouch") and Collision ~= nil then
+      CrouchCollision = Collision:WaitForChild("CollisionCrouch")
 end
 local RootPart = Character.PrimaryPart or Character:FindFirstChildWhichIsA("BasePart", true)
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
@@ -195,12 +195,12 @@ local function OnCharacterAdded(char: Model)
 	Humanoid = char:WaitForChild("Humanoid")
     RootPart = char.PrimaryPart or char:FindFirstChildWhichIsA("BasePart")
 
-    if Character:WaitForChild("CollisionCrouch") then
-      CrouchCollision = Character:WaitForChild("CollisionCrouch")
+    if char:WaitForChild("Collision") then
+      Collision = char:WaitForChild("Collision")
     end
 
-    if Character:WaitForChild("Collision") then
-      Collision = Character:WaitForChild("Collision")
+    if char:WaitForChild("CollisionCrouch") and Collision ~= nil then
+      CrouchCollision = Collision:WaitForChild("CollisionCrouch")
     end
 
     Modules.Main_Game = require(PlayerGui:WaitForChild("MainUI").Initiator.Main_Game :: ModuleScript)
