@@ -9,6 +9,8 @@
             |___/                                                   |___/         |_|
 ]]--
 
+--mod
+
 if getgenv().VynixuEntitySpawnerV2 then return getgenv().VynixuEntitySpawnerV2 end
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
