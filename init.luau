@@ -964,13 +964,17 @@ Module.Run = function(self, entity: any, copyEntity: boolean)
             
             local origin = model:GetPivot().Position
             local charOrigin
+            local OriginRoot 
 
             if (Collision and Character:GetAttribute("Crouching")) and Character:GetAttribute("Crouching") == false then
                  charOrigin = Collision.Position
+                 OriginRoot = Collision
             elseif (CrouchCollision and Character:GetAttribute("Crouching")) and Character:GetAttribute("Crouching") == true then
                  charOrigin = CrouchCollision.Position
+                 OriginRoot = CrouchCollision
             else
                  charOrigin = RootPart.Position
+                 OriginRoot = RootPart
             end
 
             print(charOrigin)
