@@ -30,6 +30,13 @@ local ROOT = "https://github.com/RegularVynixu/DOORS-Entity-Spawner-V2/raw/main"
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local Humanoid = Character:WaitForChild("Humanoid")
+local Collision
+if Character:WaitForChild("Collision") then
+      Collision = Character:WaitForChild("Collision")
+end
+if Character:WaitForChild("CollisionCrouch") then
+      CrouchCollision = Character:WaitForChild("CollisionCrouch")
+end
 local RootPart = Character.PrimaryPart or Character:FindFirstChildWhichIsA("BasePart", true)
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Camera = workspace.CurrentCamera
