@@ -963,7 +963,15 @@ Module.Run = function(self, entity: any, copyEntity: boolean)
             if model:GetAttribute("Paused") then continue end
             
             local origin = model:GetPivot().Position
-            local charOrigin = RootPart.Position
+            local charOrigin
+
+            if (Collision and Character:GetAttribute("Crouching")) and Character:GetAttribute("Crouching") == false then
+                 charOrigin = Collision.Position
+            elseif (CrouchCollision and Character:GetAttribute("Crouching")) and Character:GetAttribute("Crouching") == true then
+                 charOrigin = CrouchCollision.Position
+            else
+                 charOrigin = RootPart.Position
+            end
             
             -- In Sight detection
             local inSight = false
