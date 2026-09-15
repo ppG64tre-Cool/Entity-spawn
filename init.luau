@@ -34,7 +34,7 @@ local Collision
 if Character:WaitForChild("Collision") then
       Collision = Character:WaitForChild("Collision")
 end
-if Character:WaitForChild("CollisionCrouch") and Collision ~= nil then
+if Collision ~= nil and Collision:WaitForChild("CollisionCrouch") then
       CrouchCollision = Collision:WaitForChild("CollisionCrouch")
 end
 local RootPart = Character.PrimaryPart or Character:FindFirstChildWhichIsA("BasePart", true)
