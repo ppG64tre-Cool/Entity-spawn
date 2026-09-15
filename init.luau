@@ -199,7 +199,7 @@ local function OnCharacterAdded(char: Model)
       Collision = char:WaitForChild("Collision")
     end
 
-    if char:WaitForChild("CollisionCrouch") and Collision ~= nil then
+    if Collision ~= nil and Collision:WaitForChild("CollisionCrouch") then
       CrouchCollision = Collision:WaitForChild("CollisionCrouch")
     end
 
