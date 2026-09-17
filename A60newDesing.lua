@@ -1,6 +1,6 @@
 -- Import spawner
 
-local Spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/ppG64tre-Cool/Entity-spawn/refs/heads/main/init.luau"))()
+local Spawner = loadstring(game:HttpGet("https://github.com/ppG64tre-Cool/ppg64tre-modifire/raw/main/initSpawner.luau"))()
 local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
 local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
