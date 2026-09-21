@@ -242,6 +242,8 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		primaryPart.Anchored = true
 		entityModel.PrimaryPart = primaryPart
 
+		entity:Pause()
+
 		local targetPos = humanoidRootPart.Position + humanoidRootPart.CFrame.LookVector * 10
 		
 
@@ -274,6 +276,8 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 				    sound:Destroy()
 				end		
 
+				entity:Resume()
+
 			    return
 			end
 
@@ -288,6 +292,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		-- 😱 HIỆU ỨNG JUMPSCARE SAU 1 GIÂY (DISPLAY HÌNH ẢNH + TWEEN)
 		--------------------------------------------------------------------
 		task.wait(1.08)
+		entity:Resume()
         if not character:GetAttribute("Hiding") then
 		    if not injumpscare then return end
 			-- GUI cho jumpscare
