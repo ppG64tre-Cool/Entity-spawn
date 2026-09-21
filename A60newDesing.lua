@@ -243,11 +243,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		entityModel.PrimaryPart = primaryPart
 
 		local targetPos = humanoidRootPart.Position + humanoidRootPart.CFrame.LookVector * 10
-		local moveTween = TweenService:Create(primaryPart, TweenInfo.new(0.2), {
-			CFrame = CFrame.new(targetPos)
-		})
-		moveTween:Play()
-		moveTween.Completed:Wait()
+		
 
 		-----------------------------------
 		-- 🚫 KHÓA DI CHUYỂN NGƯỜI CHƠI
@@ -283,7 +279,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 
 			-- Bám theo camera
 			local desiredPos = camera.CFrame.Position + camera.CFrame.LookVector * 4
-			primaryPart.CFrame = CFrame.new(desiredPos)
+			primaryPart.CFrame = primaryPart.CFrame:Lerp(CFrame.new(desiredPos),0.5)
 			camera.CFrame = CFrame.lookAt(camera.CFrame.Position, primaryPart.Position)
 		end)
 
@@ -291,7 +287,7 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		--------------------------------------------------------------------
 		-- 😱 HIỆU ỨNG JUMPSCARE SAU 1 GIÂY (DISPLAY HÌNH ẢNH + TWEEN)
 		--------------------------------------------------------------------
-		task.wait(0.88)
+		task.wait(1.08)
         if not character:GetAttribute("Hiding") then
 		    if not injumpscare then return end
 			-- GUI cho jumpscare
