@@ -187,7 +187,7 @@ local function SummonMulitMonster()
     
     		local targetPos = humanoidRootPart.Position + humanoidRootPart.CFrame.LookVector * 10
     		
-    		
+    		entity:Pause()
     
     		-- CAMERA BÁM THEO
     		local camConn
@@ -207,7 +207,7 @@ local function SummonMulitMonster()
 					sound:Stop()
 				    sound:Destroy()
 				end		
-
+                entity:Resume()
 			    return
 			end
 
@@ -222,6 +222,7 @@ local function SummonMulitMonster()
 		-- 😱 HIỆU ỨNG JUMPSCARE SAU 1 GIÂY (DISPLAY HÌNH ẢNH + TWEEN)
 		--------------------------------------------------------------------
 		task.wait(1.08)
+			entity:Resume()
             if not character:GetAttribute("Hiding") then
     		    if not injumpscare then return end
     		local gui = Instance.new("ScreenGui", player.PlayerGui)
