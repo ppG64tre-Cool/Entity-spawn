@@ -182,40 +182,42 @@ local function SummonMulitMonster()
     		entityModel.PrimaryPart = primaryPart
     
     		local targetPos = humanoidRootPart.Position + humanoidRootPart.CFrame.LookVector * 10
-    		local moveTween = TweenService:Create(primaryPart, TweenInfo.new(0.2), {
-    			CFrame = CFrame.new(targetPos)
-    		})
-    		moveTween:Play()
-    		moveTween.Completed:Wait()
+    		
+    		
     
     		-- CAMERA BÁM THEO
     		local camConn
-    		camConn = RunService.RenderStepped:Connect(function()
-    			if character:GetAttribute("Hiding") then
-    				if camConn then camConn:Disconnect() end
-    				camera.CameraType = Enum.CameraType.Custom
-    
-    				for _, s in ipairs(allSounds) do
-    					if s and s.Parent then s:Play() end
-    				end
-    
-    				injumpscare = false
-    
-                    if sound ~= nil and sound:IsA("Sound") then
-    					sound:Stop()
-    				    sound:Destroy()
-    				end		
-    
-    			    return
-    			end
-    
-    			local desiredPos = camera.CFrame.Position + camera.CFrame.LookVector * 4
-    			primaryPart.CFrame = CFrame.new(desiredPos)
-    			camera.CFrame = CFrame.lookAt(camera.CFrame.Position, primaryPart.Position)
-    		end)
-    
-    		-- HIỆU ỨNG JUMPSCARE SAU 1 GIÂY
-    		task.wait(0.88)
+		camConn = RunService.RenderStepped:Connect(function()
+			-- Nếu người chơi trốn, hủy jumpscare
+			if character:GetAttribute("Hiding") then
+				if camConn then camConn:Disconnect() end
+				camera.CameraType = Enum.CameraType.Custom
+
+				for _, s in ipairs(allSounds) do
+					if s and s.Parent then s:Play() end
+				end
+
+				injumpscare = false
+
+                if sound ~= nil and sound:IsA("Sound") then
+					sound:Stop()
+				    sound:Destroy()
+				end		
+
+			    return
+			end
+
+			-- Bám theo camera
+			local desiredPos = camera.CFrame.Position + camera.CFrame.LookVector * 4
+			primaryPart.CFrame = primaryPart.CFrame:Lerp(CFrame.new(desiredPos),0.5)
+			camera.CFrame = CFrame.lookAt(camera.CFrame.Position, primaryPart.Position)
+		end)
+
+
+		--------------------------------------------------------------------
+		-- 😱 HIỆU ỨNG JUMPSCARE SAU 1 GIÂY (DISPLAY HÌNH ẢNH + TWEEN)
+		--------------------------------------------------------------------
+		task.wait(1.08)
             if not character:GetAttribute("Hiding") then
     		    if not injumpscare then return end
     		local gui = Instance.new("ScreenGui", player.PlayerGui)
