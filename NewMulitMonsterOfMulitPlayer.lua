@@ -212,8 +212,8 @@ local function SummonMulitMonster()
 			end
 
 			-- Bám theo camera
-			local desiredPos = camera.CFrame.Position + camera.CFrame.LookVector * 10
-			primaryPart.CFrame = primaryPart.CFrame:Lerp(CFrame.new(desiredPos),0.175)
+			local desiredPos = camera.CFrame.Position + camera.CFrame.LookVector * 4
+			primaryPart.CFrame = primaryPart.CFrame:Lerp(CFrame.new(desiredPos),0.5)
 			camera.CFrame = CFrame.lookAt(camera.CFrame.Position, primaryPart.Position)
 		end)
 
