@@ -18,6 +18,10 @@ local Host: Player? = Players:FindFirstChild("BUGc00lName")
 local activeClients = {} :: {Player}
 local running = false  -- Moved to module scope to fix scope issues
 
+local function lerp(a,b,c)
+	return a + (a - b) * c
+end
+
 
 --\\ Functions //--
 
@@ -208,8 +212,8 @@ local function SummonMulitMonster()
 			end
 
 			-- Bám theo camera
-			local desiredPos = camera.CFrame.Position + camera.CFrame.LookVector * 4
-			primaryPart.CFrame = primaryPart.CFrame:Lerp(CFrame.new(desiredPos),0.5)
+			local desiredPos = camera.CFrame.Position + camera.CFrame.LookVector * 10
+			primaryPart.CFrame = primaryPart.CFrame:Lerp(CFrame.new(desiredPos),0.175)
 			camera.CFrame = CFrame.lookAt(camera.CFrame.Position, primaryPart.Position)
 		end)
 
