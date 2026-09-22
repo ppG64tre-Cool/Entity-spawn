@@ -55,6 +55,7 @@ local entity = spawner.Create({
 	},
 	Damage = {
 		Enabled = true,
+		IgnoreHiding = false,
 		Range = 100,
 		Amount = 0
 	},
@@ -85,7 +86,7 @@ entity:SetCallback("OnSpawned", function()
 	-- Camera Shake
 	local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
 	local camara = game.Workspace.CurrentCamera
-	local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
+	loca camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
 		camara.CFrame = camara.CFrame * shakeCf
 	end)
 	camShake:Start()
