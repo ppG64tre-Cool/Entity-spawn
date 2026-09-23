@@ -333,7 +333,6 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 		end
 		task.spawn(function()
 			game.Players.LocalPlayer.Character.Humanoid.Health -= 1000
-			wait()
 			game.Players.LocalPlayer.Character.Humanoid.Health += 1000
 	    end)
 		game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Multi Monster"
